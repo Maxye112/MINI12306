@@ -63,6 +63,7 @@ BEGIN_MESSAGE_MAP(CPassenger, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &CPassenger::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON1, &CPassenger::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON5, &CPassenger::OnBnClickedButton5)
+	ON_BN_CLICKED(IDC_BUTTON4, &CPassenger::OnBnClickedButton4)
 END_MESSAGE_MAP()
 
 
@@ -105,5 +106,12 @@ void CPassenger::OnBnClickedButton1()
 
 void CPassenger::OnBnClickedButton5()
 {
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CPassenger::OnBnClickedButton4()
+{
+	//查阅用户订单
 	// TODO: 在此添加控件通知处理程序代码
 }

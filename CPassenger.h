@@ -28,4 +28,5 @@ public:
 	afx_msg void OnBnClickedButton1();
 	CDateTimeCtrl m_DTCtrl;
 	afx_msg void OnBnClickedButton5();
+	afx_msg void OnBnClickedButton4();
 };
