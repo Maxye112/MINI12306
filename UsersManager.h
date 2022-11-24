@@ -18,5 +18,6 @@ public:
 	bool ResetPassword(char[], char[]);
 	bool ValidateUser(char[], char[], unsigned);
 	bool FindUserByTel(char*, User &);
+	void EditUser(User&);
 };
 

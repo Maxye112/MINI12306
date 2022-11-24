@@ -183,6 +183,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CbookedDlg.h" />
     <ClInclude Include="CEnsureInfoDlg.h" />
     <ClInclude Include="CFindFlightDlg.h" />
     <ClInclude Include="CityManager.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="UsersManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CbookedDlg.cpp" />
     <ClCompile Include="CEnsureInfoDlg.cpp" />
     <ClCompile Include="CFindFlightDlg.cpp" />
     <ClCompile Include="CityManager.cpp" />

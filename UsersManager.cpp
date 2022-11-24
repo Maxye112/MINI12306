@@ -112,3 +112,12 @@ bool UsersManager::FindUserByTel(char* Tel, User& Dest) {
 	}
 	return false;
 }
+
+void UsersManager::EditUser(User& t) {
+	size_t size = UserList.size();
+	for (size_t i = 0; i < size; ++i) {
+		User tmp = UserList[i];
+		if (strcmp(t.GetTel(), tmp.GetTel()) == 0)
+			UserList[i] = t;
+	}
+}

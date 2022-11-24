@@ -6,6 +6,7 @@
 #include "afxdialogex.h"
 #include "CPassenger.h"
 #include "CFindFlightDlg.h"
+#include "CbookedDlg.h"
 
 // CPassenger 对话框
 
@@ -35,8 +36,6 @@ BOOL CPassenger::OnInitDialog()
 		}
 	}
 	// TODO: 在此添加额外的初始化代码
-	//CType.AddString(_T("乘客"));
-	//CType.AddString(_T("管理员"));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -64,6 +63,7 @@ BEGIN_MESSAGE_MAP(CPassenger, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &CPassenger::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON5, &CPassenger::OnBnClickedButton5)
 	ON_BN_CLICKED(IDC_BUTTON4, &CPassenger::OnBnClickedButton4)
+	ON_BN_CLICKED(IDC_BUTTON3, &CPassenger::OnBnClickedButton3)
 END_MESSAGE_MAP()
 
 
@@ -113,5 +113,16 @@ void CPassenger::OnBnClickedButton5()
 void CPassenger::OnBnClickedButton4()
 {
 	//查阅用户订单
+	CbookedDlg New;
+	New.DoModal();
+	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CPassenger::OnBnClickedButton3()
+{
+	extern User CurrentUser;
+
+	//修改用户信息
 	// TODO: 在此添加控件通知处理程序代码
 }

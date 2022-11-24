@@ -63,6 +63,9 @@
     <ClInclude Include="CEnsureInfoDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CbookedDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MINI12306.cpp">
@@ -96,6 +99,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CEnsureInfoDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CbookedDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

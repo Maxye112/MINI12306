@@ -114,36 +114,50 @@ void CFindFlightDlg::OnBnClickedOk()
 			SinglePrice = tmp.GetSecond().price;
 			T = "二等座";
 			Cnt = tmp.GetSecond().cnt;
+			if (Cnt < cnt)
+				nRES = AfxMessageBox(_T("无票额，请重新选择"));
+			else
+				tmp.SetSecondInfo(Cnt - cnt, SinglePrice);
 		}
 		else
 		{
 			SinglePrice = tmp.GetFirst().price;
 			T = "一等座";
 			Cnt = tmp.GetFirst().cnt;
+			if (Cnt < cnt)
+				nRES = AfxMessageBox(_T("无票额，请重新选择"));
+			else
+				tmp.SetFirstInfo(Cnt - cnt, SinglePrice);
 		}
-		if (Cnt < cnt)
-			nRES = AfxMessageBox(_T("无票额，请重新选择"));
-		else
+		CString CNT;
+		CNT.Format("%d", cnt);
+		int Total = SinglePrice * cnt;
+		CString tot;
+		tot.Format("%d", Total);
+		// TODO: 在此添加控件通知处理程序代码
+		CEnsureInfoDlg Ensure;
+		Ensure.mFlightInfo = tmp.GetNum();
+		Ensure.mFlightDep = tmp.GetOrigin();
+		Ensure.mFlightArr = tmp.GetDestination();
+		Ensure.mFlightSt = tmp.GetStartTime();
+		Ensure.mFlightArT = tmp.GetArriveTime();
+		Ensure.mFlightType = T;
+		char yuan[] = "元", zhang[] = "张";
+		Ensure.mCNT = CNT + zhang;
+		CString Yuan = yuan;
+		Ensure.mTotal = tot + Yuan;
+		nRES = Ensure.DoModal();
+		if (nRES == IDOK)
 		{
-			CString CNT;
-			CNT.Format("%d", cnt);
-			int Total = SinglePrice * cnt;
-			CString tot;
-			tot.Format("%d", Total);
-			// TODO: 在此添加控件通知处理程序代码
-			CEnsureInfoDlg Ensure;
-			Ensure.mFlightInfo = tmp.GetNum();
-			Ensure.mFlightDep = tmp.GetOrigin();
-			Ensure.mFlightArr = tmp.GetDestination();
-			Ensure.mFlightSt = tmp.GetStartTime();
-			Ensure.mFlightArT = tmp.GetArriveTime();
-			Ensure.mFlightType = T;
-			char yuan[] = "元", zhang[] = "张";
-			Ensure.mCNT = CNT + zhang;
-			CString Yuan = yuan;
-			Ensure.mTotal = tot + Yuan;
-			nRES = Ensure.DoModal();
+			extern User CurrentUser;
+			CurrentUser.BookedList.push_back(tmp);
+			FM.EditFlight(tmp.GetNum(), tmp.GetDate(), tmp);
+			UsersManager UM;
+			UM.EditUser(CurrentUser);
+			MessageBox(_T("购买成功！"));
+			CDialogEx::OnOK();
 		}
+		
 	}
 	// TODO: 在此添加控件通知处理程序代码
 	//CDialogEx::OnOK();
@@ -152,5 +166,5 @@ void CFindFlightDlg::OnBnClickedOk()
 
 void CFindFlightDlg::OnBnClickedRadio2()
 {
-	nIndex = 2;
+	nIndex = 0;
 }

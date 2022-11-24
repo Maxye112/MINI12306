@@ -11,7 +11,8 @@
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
+User CurrentUser;
+FlightInfo CurrentFlight;
 
 // CMINI12306App
 
