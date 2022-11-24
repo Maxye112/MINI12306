@@ -17,7 +17,7 @@ public:
 	bool DelUser(char[]);
 	bool ResetPassword(char[], char[]);
 	bool ValidateUser(char[], char[], unsigned);
-	bool FindUserByTel(char*, User &);
-	void EditUser(User&);
+	bool FindUserByTel(char*, User&);
+	void EditUserFlight(User&, FlightInfo&);
 };
 

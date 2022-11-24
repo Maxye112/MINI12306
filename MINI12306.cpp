@@ -13,6 +13,7 @@
 #endif
 User CurrentUser;
 FlightInfo CurrentFlight;
+UsersManager UM;
 
 // CMINI12306App
 

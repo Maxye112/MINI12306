@@ -14,7 +14,7 @@ IMPLEMENT_DYNAMIC(CFindFlightDlg, CDialogEx)
 CFindFlightDlg::CFindFlightDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_QUERY_DIALOG, pParent)
 {
-
+	nIndex = 0;
 }
 
 CFindFlightDlg::~CFindFlightDlg()
@@ -104,34 +104,32 @@ void CFindFlightDlg::OnBnClickedOk()
 	{
 		FlightManager FM;
 		FlightInfo tmp = FM.FQ[t];
-		//int nIndex = mCB.GetCurSel();
 		int SinglePrice;
 		CString T;
-		int cnt = GetDlgItemInt(IDC_EDIT1);
 		int Cnt;
 		INT_PTR nRES;
 		if (nIndex == 0) {
 			SinglePrice = tmp.GetSecond().price;
 			T = "二等座";
 			Cnt = tmp.GetSecond().cnt;
-			if (Cnt < cnt)
+			if (Cnt < 1)
 				nRES = AfxMessageBox(_T("无票额，请重新选择"));
 			else
-				tmp.SetSecondInfo(Cnt - cnt, SinglePrice);
+				tmp.SetSecondInfo(Cnt - 1);
 		}
 		else
 		{
 			SinglePrice = tmp.GetFirst().price;
 			T = "一等座";
 			Cnt = tmp.GetFirst().cnt;
-			if (Cnt < cnt)
+			if (Cnt < 1)
 				nRES = AfxMessageBox(_T("无票额，请重新选择"));
 			else
-				tmp.SetFirstInfo(Cnt - cnt, SinglePrice);
+				tmp.SetFirstInfo(Cnt - 1);
 		}
 		CString CNT;
-		CNT.Format("%d", cnt);
-		int Total = SinglePrice * cnt;
+		CNT.Format("%d", 1);
+		int Total = SinglePrice;
 		CString tot;
 		tot.Format("%d", Total);
 		// TODO: 在此添加控件通知处理程序代码
@@ -147,17 +145,29 @@ void CFindFlightDlg::OnBnClickedOk()
 		CString Yuan = yuan;
 		Ensure.mTotal = tot + Yuan;
 		nRES = Ensure.DoModal();
+		//extern UsersManager UM;
 		if (nRES == IDOK)
 		{
 			extern User CurrentUser;
-			CurrentUser.BookedList.push_back(tmp);
 			FM.EditFlight(tmp.GetNum(), tmp.GetDate(), tmp);
-			UsersManager UM;
-			UM.EditUser(CurrentUser);
+			FlightInfo HaveBooked = tmp;
+			if (nIndex == 0) 
+			{
+				HaveBooked.SetSecondInfo(1);
+				HaveBooked.SetFirstInfo(0);
+			}
+			else 
+			{
+				HaveBooked.SetFirstInfo(1);
+				HaveBooked.SetSecondInfo(0);
+			}
+			
+			CurrentUser.BookedList.push_back(HaveBooked);
+			UM.EditUserFlight(CurrentUser, HaveBooked);
 			MessageBox(_T("购买成功！"));
+			
 			CDialogEx::OnOK();
 		}
-		
 	}
 	// TODO: 在此添加控件通知处理程序代码
 	//CDialogEx::OnOK();

@@ -16,7 +16,6 @@
 // CMINI12306App:
 // 有关此类的实现，请参阅 MINI12306.cpp
 //
-
 class CMINI12306App : public CWinApp
 {
 public:
@@ -34,3 +33,4 @@ public:
 extern CMINI12306App theApp;
 extern User CurrentUser;
 extern FlightInfo CurrentFlight;
+extern UsersManager UM;

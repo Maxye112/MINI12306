@@ -17,7 +17,7 @@
 #define new DEBUG_NEW
 #endif
 
-
+int Typ = -1;
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -65,7 +65,6 @@ CMINI12306Dlg::CMINI12306Dlg(CWnd* pParent /*=nullptr*/)
 void CMINI12306Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_COMBO_T, CType);
 }
 
 BEGIN_MESSAGE_MAP(CMINI12306Dlg, CDialogEx)
@@ -74,8 +73,9 @@ BEGIN_MESSAGE_MAP(CMINI12306Dlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CMINI12306Dlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BUTTONRegi, &CMINI12306Dlg::OnBnClickedButtonregi)
-	//ON_BN_CLICKED(IDC_MFCLINK_REPW, &CMINI12306Dlg::OnBnClickedMfclinkRepw)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMINI12306Dlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_RADIO1, &CMINI12306Dlg::OnBnClickedRadio1)
+	ON_BN_CLICKED(IDC_RADIO2, &CMINI12306Dlg::OnBnClickedRadio2)
 END_MESSAGE_MAP()
 
 
@@ -111,9 +111,6 @@ BOOL CMINI12306Dlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-	// TODO: 在此添加额外的初始化代码
-	CType.AddString(_T("乘客"));
-	CType.AddString(_T("管理员"));
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
@@ -170,14 +167,13 @@ HCURSOR CMINI12306Dlg::OnQueryDragIcon()
 
 void CMINI12306Dlg::OnBnClickedOk()
 {
-	UsersManager UM;
+	//extern UsersManager UM;
 	CString ITEL, IPW; 
 	GetDlgItemText(IDC_EDIT_TEL, ITEL);
 	GetDlgItemText(IDC_EDIT_PASSWORD, IPW);
 	char* Tel = ITEL.GetBuffer(ITEL.GetLength());
 	char* Pw = IPW.GetBuffer(IPW.GetLength());
-	int Typ = CType.GetCurSel();
-	if (ITEL == "" || IPW == "" )
+	if (ITEL == "" || IPW == "" || Typ == -1 )
 		AfxMessageBox(_T("请完整填写信息！"), MB_OK | MB_ICONERROR, 0);
 	else
 	{
@@ -188,13 +184,12 @@ void CMINI12306Dlg::OnBnClickedOk()
 			{
 				//用户端
 				CPassenger PasDlg;
-				User tmp;
-				UM.FindUserByTel(Tel, tmp);
-				PasDlg.m_UserName = tmp.GetName();
+				extern User CurrentUser;
+				UM.FindUserByTel(Tel, CurrentUser);
+				PasDlg.m_UserName = CurrentUser.GetName();
 				MessageBox(_T("登录成功！"));
 				GetDlgItem(IDC_EDIT_TEL)->SetWindowTextA("");
 				GetDlgItem(IDC_EDIT_PASSWORD)->SetWindowTextA("");
-				GetDlgItem(IDC_COMBO_T)->SetWindowTextA("");
 				ShowWindow(SW_HIDE);
 				INT_PTR New = PasDlg.DoModal();
 				if (IDOK == New)
@@ -215,7 +210,6 @@ void CMINI12306Dlg::OnBnClickedButtonregi()
 {
 	CRegister RegDlg;
 	RegDlg.DoModal();
-	// TODO: 在此添加控件通知处理程序代码
 }
 
 
@@ -225,6 +219,16 @@ void CMINI12306Dlg::OnBnClickedButton2()
 	CResetDialog1 New;
 	GetDlgItemText(IDC_EDIT_TEL, New.mTel);
 	New.DoModal();
+}
 
-	// TODO: 在此添加控件通知处理程序代码
+
+void CMINI12306Dlg::OnBnClickedRadio1()
+{
+	Typ = 0;
+}
+
+
+void CMINI12306Dlg::OnBnClickedRadio2()
+{
+	Typ = 1;
 }

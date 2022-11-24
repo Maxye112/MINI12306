@@ -69,7 +69,7 @@ END_MESSAGE_MAP()
 
 void CRegister::OnBnClickedOk()
 {
-	UsersManager UM;
+	//extern UsersManager UM;
 	CString NAME, ID, PW, APW, TEL;
 	int type = CType.GetCurSel();
 	GetDlgItemText(IDC_EDIT_TEL, TEL);

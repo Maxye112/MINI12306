@@ -15,6 +15,15 @@ protected:
 public:
 	vector <FlightInfo> BookedList;
 	User() { Money = 0; }
+	User(const User& t) {
+		strcpy_s(Name, t.Name);
+		strcpy_s(TelNum, t.TelNum);
+		strcpy_s(Password, t.Password);
+		strcpy_s(IDNum, t.IDNum);
+		isManager = t.isManager;
+		Money = t.Money;
+		BookedList = t.BookedList;
+	}
 	User(char name[], char pw[], char Tel[], int iM, int Mon = 0) {
 		strcpy_s(TelNum, Tel);
 		strcpy_s(Name, name);
@@ -34,4 +43,5 @@ public:
 	void Recharge(int t) { Money += t; } //≥‰÷µ
 	char* GetID(){ return IDNum; }
 	int GetMoney() { return Money; }
+	
 };

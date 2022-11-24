@@ -23,8 +23,26 @@ UsersManager::UsersManager() {
 		f.read((char*)&money, sizeof(money));
 		unsigned n = 0;
 		f.read((char*)&n, sizeof(unsigned));
-		User New(Name, Password, Tel, type, money);
-		UserList.push_back(New);
+		User NewU(Name, Password, Tel, type, money);
+		if (n) 
+			for (int j = 0; j < n; ++j) {
+				char No[10], Date[20], Dest[20], Ori[20], ST[10], AT[20];
+				f.read(No, 10 * sizeof(char));
+				f.read(Date, 20 * sizeof(char));
+				f.read(Ori, 20 * sizeof(char));
+				f.read(Dest, 20 * sizeof(char));
+				f.read(ST, 10 * sizeof(char));
+				f.read(AT, 10 * sizeof(char));
+				int Fc, Fp, Sc, Sp;
+				f.read((char*)&Fc, sizeof(int));
+				f.read((char*)&Fp, sizeof(int));
+				f.read((char*)&Sc, sizeof(int));
+				f.read((char*)&Sp, sizeof(int));
+				FlightInfo New(No, Date);
+				NewU.BookedList.push_back(New);
+			}
+
+		UserList.push_back(NewU);
 	}
 	f.close();
 }
@@ -52,6 +70,18 @@ UsersManager::~UsersManager() {
 				char* Date = t.GetDate();
 				f.write(No, 10 * sizeof(char));
 				f.write(Date, 20 * sizeof(char));
+				f.write(t.GetOrigin(), 20 * sizeof(char));
+				f.write(t.GetDestination(), 20 * sizeof(char));
+				f.write(t.GetStartTime(), 10 * sizeof(char));
+				f.write(t.GetArriveTime(), 10 * sizeof(char));
+				Seats t1 = t.GetFirst();
+				int t11 = t1.cnt, t12 = t1.price;
+				f.write((char*)&t11, sizeof(int));
+				f.write((char*)&t12, sizeof(int));
+				Seats t3 = t.GetSecond();
+				int t31 = t3.cnt, t32 = t3.price;
+				f.write((char*)&t31, sizeof(int));
+				f.write((char*)&t32, sizeof(int));
 			}
 		}
 	}
@@ -107,17 +137,17 @@ bool UsersManager::FindUserByTel(char* Tel, User& Dest) {
 		User tmp = UserList[i];
 		if ((strcmp(Tel, tmp.GetTel()) == 0)) {
 			Dest = tmp;
+			Dest.BookedList = tmp.BookedList;
 			return true;
 		}
 	}
 	return false;
 }
 
-void UsersManager::EditUser(User& t) {
-	size_t size = UserList.size();
-	for (size_t i = 0; i < size; ++i) {
-		User tmp = UserList[i];
-		if (strcmp(t.GetTel(), tmp.GetTel()) == 0)
-			UserList[i] = t;
+void UsersManager::EditUserFlight(User& t, FlightInfo & r) {
+	vector<User>::iterator it;
+	for (it = UserList.begin(); it != UserList.end(); ++it) {
+		if (strcmp(t.GetTel(), it->GetTel()) == 0)
+			it->BookedList.push_back(r);
 	}
 }
