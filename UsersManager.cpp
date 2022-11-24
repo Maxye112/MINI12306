@@ -39,6 +39,11 @@ UsersManager::UsersManager() {
 				f.read((char*)&Sc, sizeof(int));
 				f.read((char*)&Sp, sizeof(int));
 				FlightInfo New(No, Date);
+				New.SetOrigin(Ori);
+				New.SetDestination(Dest);
+				New.SetTime(ST, AT);
+				New.SetFirstInfo(Fc, Fp);
+				New.SetSecondInfo(Sc, Sp);
 				NewU.BookedList.push_back(New);
 			}
 
