@@ -24,4 +24,7 @@ protected:
 public:
 	CString mTel;
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedRadio1();
+	int Typ;
+	afx_msg void OnBnClickedRadio2();
 };

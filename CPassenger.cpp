@@ -65,6 +65,7 @@ BEGIN_MESSAGE_MAP(CPassenger, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON5, &CPassenger::OnBnClickedButton5)
 	ON_BN_CLICKED(IDC_BUTTON4, &CPassenger::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON3, &CPassenger::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON7, &CPassenger::OnBnClickedButton7)
 END_MESSAGE_MAP()
 
 
@@ -106,17 +107,12 @@ void CPassenger::OnBnClickedButton1()
 
 void CPassenger::OnBnClickedButton5()
 {
-	//extern User CurrentUser;
-	//extern UsersManager UM;
 	CRechargeDlg New;
 	New.m_Money.Format("%d", CurrentUser.GetMoney());
 	New.m_UserName = CurrentUser.GetName();
 	INT_PTR nRes = New.DoModal();
 	if (nRes == IDOK)
-	
 		MessageBox(_T("充值成功！"));
-	
-	
 	// TODO: 在此添加控件通知处理程序代码
 }
 
@@ -126,7 +122,6 @@ void CPassenger::OnBnClickedButton4()
 	//查阅用户订单
 	CbookedDlg New;
 	New.DoModal();
-	// TODO: 在此添加控件通知处理程序代码
 }
 
 
@@ -135,5 +130,19 @@ void CPassenger::OnBnClickedButton3()
 	extern User CurrentUser;
 
 	//修改用户信息
-	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void CPassenger::OnBnClickedButton7()
+{
+	CString Year, Month, Day, Date;
+	COleDateTime m_Date;
+	m_DTCtrl.GetTime(m_Date);
+	int year = m_Date.GetYear();
+	int month = m_Date.GetMonth();
+	int day = m_Date.GetDay();
+	Year.Format("%d", year);
+	Month.Format("%d", month);
+	Day.Format("%d", day);
+	Date = Year + "/" + Month + "/" + Day;
 }

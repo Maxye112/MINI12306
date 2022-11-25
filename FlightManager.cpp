@@ -131,3 +131,14 @@ bool FlightManager::SearchFlightByPlace(char ST[], char DE[], char Date[], Fligh
 	if (List.size()) return true;
 	else return false;
 }
+
+FlightInfo FlightManager::FindFlight(FlightInfo& t) {
+	unsigned size = FQ.size();
+	FlightInfo tmp;
+	for (int i = 0; i < size; ++i) {
+		FlightInfo tmp = FQ[i];
+		if (strcmp(tmp.GetNum(), t.GetNum()) == 0 && strcmp(tmp.GetDate(), t.GetDate()) == 0)
+			return tmp;
+	}
+	return tmp;
+}

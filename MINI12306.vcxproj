@@ -194,6 +194,7 @@
     <ClInclude Include="FlightInfo.h" />
     <ClInclude Include="FlightManager.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="ManagerDlg.h" />
     <ClInclude Include="MINI12306.h" />
     <ClInclude Include="MINI12306Dlg.h" />
     <ClInclude Include="pch.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="CRegister.cpp" />
     <ClCompile Include="CResetDialog1.cpp" />
     <ClCompile Include="FlightManager.cpp" />
+    <ClCompile Include="ManagerDlg.cpp" />
     <ClCompile Include="MINI12306.cpp" />
     <ClCompile Include="MINI12306Dlg.cpp" />
     <ClCompile Include="pch.cpp">

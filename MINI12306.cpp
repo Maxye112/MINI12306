@@ -14,6 +14,7 @@
 User CurrentUser;
 FlightInfo CurrentFlight;
 UsersManager UM;
+FlightManager FM;
 
 // CMINI12306App
 

@@ -6,15 +6,15 @@ using std::vector;
 
 class User {
 protected:
-	char Name[20]; //姓名
-	char TelNum[20]; //手机号码
-	char Password[20]; //密码
+	char Name[20] = {}; //姓名
+	char TelNum[20] = {}; //手机号码
+	char Password[20] = {}; //密码
 	int isManager; //是否是管理员，1为是，0为否
-	char IDNum[20];//身份证号
+	char IDNum[20] = {};//身份证号
 	int Money; //余额
 public:
 	vector <FlightInfo> BookedList;
-	User() { Money = 0; }
+	User() { Money = isManager = 0; }
 	User(const User& t) {
 		strcpy_s(Name, t.Name);
 		strcpy_s(TelNum, t.TelNum);

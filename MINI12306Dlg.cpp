@@ -167,7 +167,7 @@ HCURSOR CMINI12306Dlg::OnQueryDragIcon()
 
 void CMINI12306Dlg::OnBnClickedOk()
 {
-	//extern UsersManager UM;
+	extern UsersManager UM;
 	CString ITEL, IPW; 
 	GetDlgItemText(IDC_EDIT_TEL, ITEL);
 	GetDlgItemText(IDC_EDIT_PASSWORD, IPW);

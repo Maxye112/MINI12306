@@ -19,5 +19,6 @@ public:
 	bool EditFlight(char[], char[], const FlightInfo&);
 	bool SearchFlightByPlace(char[], char[], char[], FlightQueue&);
 	bool SearchFlightByNum(char[], char[], FlightQueue&);
+	FlightInfo FindFlight(FlightInfo&);
 };
 

@@ -14,7 +14,7 @@ IMPLEMENT_DYNAMIC(CFindFlightDlg, CDialogEx)
 CFindFlightDlg::CFindFlightDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_QUERY_DIALOG, pParent)
 {
-	nIndex = 0;
+	nIndex = -1;
 }
 
 CFindFlightDlg::~CFindFlightDlg()
@@ -44,7 +44,7 @@ BOOL CFindFlightDlg::OnInitDialog()
 	pListCtrl->InsertColumn(5, _T("到达时间"), LVCFMT_CENTER, 60, 0);
 	pListCtrl->InsertColumn(6, _T("一等舱票额"), LVCFMT_CENTER, 80, 0);
 	pListCtrl->InsertColumn(7, _T("二等舱票额"), LVCFMT_CENTER, 80, 0);
-	FlightManager FM;
+	extern FlightManager FM;
 	vector <FlightInfo> List;
 	char* ori = Ori.GetBuffer(Ori.GetLength());
 	char* dest = Dest.GetBuffer(Dest.GetLength());
@@ -90,7 +90,6 @@ END_MESSAGE_MAP()
 void CFindFlightDlg::OnBnClickedRadio1()
 {
 	nIndex = 1;
-	// TODO: 在此添加控件通知处理程序代码
 }
 
 
@@ -98,80 +97,80 @@ void CFindFlightDlg::OnBnClickedOk()
 {
 	extern User CurrentUser;
 	extern UsersManager UM;
+	extern FlightManager FM;
 	UpdateData(TRUE);
 	int t = m_ListCtrl.GetSelectionMark();
 	if (t == -1)
 		AfxMessageBox(_T("请选择一个航班！"));
 	else
 	{
-		FlightManager FM;
 		FlightInfo tmp = FM.FQ[t];
-		int SinglePrice;
-		CString T;
-		int Cnt;
+		CString T, CNT, tot;
+		int Cnt, SinglePrice;
 		INT_PTR nRES;
-		if (nIndex == 0) {
-			SinglePrice = tmp.GetSecond().price;
-			T = "二等座";
-			Cnt = tmp.GetSecond().cnt;
-			if (Cnt < 1)
-				nRES = AfxMessageBox(_T("无票额，请重新选择"));
-			else
-				tmp.SetSecondInfo(Cnt - 1);
-		}
+		if (nIndex == -1)
+			AfxMessageBox(_T("请选择坐席类型！"));
 		else
 		{
-			SinglePrice = tmp.GetFirst().price;
-			T = "一等座";
-			Cnt = tmp.GetFirst().cnt;
-			if (Cnt < 1)
-				nRES = AfxMessageBox(_T("无票额，请重新选择"));
+			bool OK = true;
+			if (nIndex == 0) {
+				SinglePrice = tmp.GetSecond().price;
+				T = "二等座";
+				Cnt = tmp.GetSecond().cnt;
+				if (Cnt < 1)
+					nRES = AfxMessageBox(_T("无票额，请重新选择")), OK = false;
+				else
+					tmp.SetSecondInfo(Cnt - 1);
+			}
 			else
-				tmp.SetFirstInfo(Cnt - 1);
-		}
-		CString CNT;
-		CNT.Format("%d", 1);
-		int Total = SinglePrice;
-		CString tot;
-		tot.Format("%d", Total);
-		// TODO: 在此添加控件通知处理程序代码
-		CEnsureInfoDlg Ensure;
-		Ensure.mFlightInfo = tmp.GetNum();
-		Ensure.mFlightDep = tmp.GetOrigin();
-		Ensure.mFlightArr = tmp.GetDestination();
-		Ensure.mFlightSt = tmp.GetStartTime();
-		Ensure.mFlightArT = tmp.GetArriveTime();
-		Ensure.mFlightType = T;
-		char yuan[] = "元", zhang[] = "张";
-		Ensure.mCNT = CNT + zhang;
-		CString Yuan = yuan;
-		Ensure.mTotal = tot;
-		Ensure.tot = Total;
-		nRES = Ensure.DoModal();
-		if (nRES == IDOK)
-		{
-			FM.EditFlight(tmp.GetNum(), tmp.GetDate(), tmp);
-			FlightInfo HaveBooked = tmp;
-			if (nIndex == 0) 
 			{
-				HaveBooked.SetSecondInfo(1);
-				HaveBooked.SetFirstInfo(0);
+				SinglePrice = tmp.GetFirst().price;
+				T = "一等座";
+				Cnt = tmp.GetFirst().cnt;
+				if (Cnt < 1)
+					nRES = AfxMessageBox(_T("无票额，请重新选择")), OK = false;
+				else
+					tmp.SetFirstInfo(Cnt - 1);
 			}
-			else 
-			{
-				HaveBooked.SetFirstInfo(1);
-				HaveBooked.SetSecondInfo(0);
+			if (OK){
+				CNT.Format("%d", 1);
+				tot.Format("%d", SinglePrice);
+				CEnsureInfoDlg Ensure;
+				Ensure.mFlightInfo = tmp.GetNum();
+				Ensure.mFlightDep = tmp.GetOrigin();
+				Ensure.mFlightArr = tmp.GetDestination();
+				Ensure.mFlightSt = tmp.GetStartTime();
+				Ensure.mFlightArT = tmp.GetArriveTime();
+				Ensure.mFlightType = T;
+				char yuan[] = "元", zhang[] = "张";
+				Ensure.mCNT = CNT + zhang;
+				CString Yuan = yuan;
+				Ensure.mTotal = tot;
+				Ensure.tot = SinglePrice;
+				nRES = Ensure.DoModal();
+				if (nRES == IDOK)
+				{
+					FM.EditFlight(tmp.GetNum(), tmp.GetDate(), tmp);
+					FlightInfo HaveBooked = tmp;
+					if (nIndex == 0)
+					{
+						HaveBooked.SetSecondInfo(1);
+						HaveBooked.SetFirstInfo(0);
+					}
+					else
+					{
+						HaveBooked.SetFirstInfo(1);
+						HaveBooked.SetSecondInfo(0);
+					}
+					CurrentUser.book(SinglePrice);
+					CurrentUser.BookedList.push_back(HaveBooked);
+					UM.EditUser(CurrentUser);
+					MessageBox(_T("购买成功！"));
+					CDialogEx::OnOK();
+				}
 			}
-			CurrentUser.book(Total);
-			CurrentUser.BookedList.push_back(HaveBooked);
-			UM.EditUserFlight(CurrentUser, HaveBooked);
-			MessageBox(_T("购买成功！"));
-			
-			CDialogEx::OnOK();
 		}
 	}
-	// TODO: 在此添加控件通知处理程序代码
-	//CDialogEx::OnOK();
 }
 
 

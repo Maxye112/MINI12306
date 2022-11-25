@@ -34,3 +34,4 @@ extern CMINI12306App theApp;
 extern User CurrentUser;
 extern FlightInfo CurrentFlight;
 extern UsersManager UM;
+extern FlightManager FM;

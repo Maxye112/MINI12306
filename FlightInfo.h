@@ -15,7 +15,8 @@ private:
 	char Origin[20] = {}; //出发地点
 	char Destination[20] = {}; //到达地点
 public:
-	FlightInfo(char* Num, char* Date) {
+	FlightInfo(char* Num, char* Date) 
+	{
 		strcpy_s(No, Num);
 		strcpy_s(this->Date, Date);
 	}
@@ -29,7 +30,8 @@ public:
 	char* GetDestination(void) { return Destination; }
 	Seats GetFirst(void) { return First; }
 	Seats GetSecond(void) { return Second; }
-	void SetFirstInfo(int c, int p) {
+	void SetFirstInfo(int c, int p) 
+	{
 		First.cnt = c, First.price = p;
 	}
 	void SetSecondInfo(int c, int p) {
@@ -38,8 +40,12 @@ public:
 	void SetFirstInfo(int c) { First.cnt = c; }
 	void SetSecondInfo(int c) { Second.cnt = c; }
 	void SetOrigin(char* O) { strcpy_s(Origin, O); }
-	void SetDestination(char* Dest) { strcpy_s(Destination, Dest); }
-	void SetTime(char s[], char a[]) { 
+	void SetDestination(char* Dest) 
+	{ 
+		strcpy_s(Destination, Dest); 
+	}
+	void SetTime(char s[], char a[]) 
+	{ 
 		strcpy_s(StartTime, s); 
 		strcpy_s(ArriveTime, a); 
 	}

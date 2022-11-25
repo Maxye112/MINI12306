@@ -22,5 +22,6 @@ protected:
 	virtual BOOL OnInitDialog();
 	DECLARE_MESSAGE_MAP()
 public:
-	CListCtrl m_ListCtrl;
+	afx_msg void OnBnClickedButton1();
+	CListCtrl mListCtrl;
 };
