@@ -17,9 +17,6 @@ BOOL CPassenger::OnInitDialog()
 	CDialogEx::OnInitDialog();
 	ShowWindow(SW_NORMAL);
 	CenterWindow();
-	// 将“关于...”菜单项添加到系统菜单中。
-
-	// IDM_ABOUTBOX 必须在系统命令范围内。
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 
@@ -35,6 +32,34 @@ BOOL CPassenger::OnInitDialog()
 			pSysMenu->AppendMenu(MF_SEPARATOR);
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
+	}
+	extern CityManager CM;
+	int size = CM.CL.size();
+	for (int i = 0; i < size; ++i) 
+	{
+		CString Name= CM.CL[i].c_str();
+		mOri.AddString(Name);
+		mDest.AddString(Name);
+	}
+	extern FlightManager FM;
+	size = FM.FQ.size();
+	COleDateTime m_Date;
+	CString Year, Month, Day, Date;
+	m_DTCtrl.GetTime(m_Date);
+	int year = m_Date.GetYear();
+	int month = m_Date.GetMonth();
+	int day = m_Date.GetDay();
+	Year.Format("%d", year);
+	Month.Format("%d", month);
+	Day.Format("%d", day);
+	Date = Year + "/" + Month + "/" + Day;
+	//char* date = Date.GetBuffer(Date.GetLength());
+	for (int i = 0; i < size; ++i)
+	{
+		if (FM.FQ[i].GetDate() != Date) 
+			continue;
+		CString ID = FM.FQ[i].GetNum();
+		mNum.AddString(ID);
 	}
 	// TODO: 在此添加额外的初始化代码
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -56,6 +81,9 @@ void CPassenger::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, m_UserName);
 	DDX_Control(pDX, IDC_DATETIMEPICKER1, m_DTCtrl);
+	DDX_Control(pDX, IDC_COMBO1, mOri);
+	DDX_Control(pDX, IDC_COMBO2, mDest);
+	DDX_Control(pDX, IDC_COMBO3, mNum);
 }
 
 
@@ -81,8 +109,8 @@ void CPassenger::OnBnClickedButton2()//退出登陆的程序
 void CPassenger::OnBnClickedButton1()
 {
 	CString Ori, Dest, Year, Month, Day, Date;
-	GetDlgItemText(IDC_EDIT2, Ori);
-	GetDlgItemText(IDC_EDIT5, Dest);
+	GetDlgItemText(IDC_COMBO1, Ori);
+	GetDlgItemText(IDC_COMBO2, Dest);
 	if (Ori == "" || Dest == "")
 		AfxMessageBox(_T("请输入出发地和目的地！"), MB_OK | MB_ICONERROR, 0);
 	else

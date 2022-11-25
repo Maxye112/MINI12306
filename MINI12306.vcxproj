@@ -187,6 +187,7 @@
     <ClInclude Include="CEnsureInfoDlg.h" />
     <ClInclude Include="CFindFlightDlg.h" />
     <ClInclude Include="CityManager.h" />
+    <ClInclude Include="ComboxAutoFill.h" />
     <ClInclude Include="CPassenger.h" />
     <ClInclude Include="CRechargeDlg.h" />
     <ClInclude Include="CRegister.h" />
@@ -209,6 +210,7 @@
     <ClCompile Include="CEnsureInfoDlg.cpp" />
     <ClCompile Include="CFindFlightDlg.cpp" />
     <ClCompile Include="CityManager.cpp" />
+    <ClCompile Include="ComboxAutoFill.cpp" />
     <ClCompile Include="CPassenger.cpp" />
     <ClCompile Include="CRechargeDlg.cpp" />
     <ClCompile Include="CRegister.cpp" />

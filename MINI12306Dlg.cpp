@@ -10,7 +10,7 @@
 #include "CPassenger.h"
 #include "CResetDialog1.h"
 #include "afxdialogex.h"
-
+#include "ManagerDlg.h"
 
 
 #ifdef _DEBUG
@@ -186,7 +186,7 @@ void CMINI12306Dlg::OnBnClickedOk()
 				if (Typ == 0)
 				{
 					//用户端
-					static CPassenger PasDlg;
+					CPassenger PasDlg;
 					extern User CurrentUser;
 					UM.FindUserByTel(Tel, CurrentUser);
 					PasDlg.m_UserName = CurrentUser.GetName();
@@ -202,6 +202,13 @@ void CMINI12306Dlg::OnBnClickedOk()
 				else
 				{
 					//管理端
+					ManagerDlg NewWin;
+					MessageBox(_T("登录成功！"));
+					GetDlgItem(IDC_EDIT_TEL)->SetWindowTextA("");
+					GetDlgItem(IDC_EDIT_PASSWORD)->SetWindowTextA("");
+					ShowWindow(SW_HIDE);
+					INT_PTR New = NewWin.DoModal();
+					CDialogEx::OnOK();
 				}
 		}
 	}

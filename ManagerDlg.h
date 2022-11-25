@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "afxdialogex.h"
-
+#include "ComboxAutoFill.h"
 
 // ManagerDlg 对话框
 
@@ -23,4 +23,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CListCtrl mListCtrl;
+	afx_msg void OnBnClickedButton3();
+	virtual BOOL OnInitDialog();
+	CComboCompletion mCityList;
 };

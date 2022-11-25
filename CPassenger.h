@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "afxdialogex.h"
-
+#include "ComboxAutoFill.h"
 
 // CPassenger 对话框
 
@@ -31,4 +31,7 @@ public:
 	afx_msg void OnBnClickedButton4();
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton7();
+	CComboCompletion mOri;
+	CComboCompletion mDest;
+	CComboCompletion mNum;
 };

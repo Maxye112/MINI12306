@@ -75,6 +75,9 @@
     <ClInclude Include="EditInfoDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ComboxAutoFill.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MINI12306.cpp">
@@ -120,6 +123,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="EditInfoDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboxAutoFill.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

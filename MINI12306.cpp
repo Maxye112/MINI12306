@@ -15,7 +15,7 @@ User CurrentUser;
 FlightInfo CurrentFlight;
 UsersManager UM;
 FlightManager FM;
-
+CityManager CM;
 // CMINI12306App
 
 BEGIN_MESSAGE_MAP(CMINI12306App, CWinApp)
