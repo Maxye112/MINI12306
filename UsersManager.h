@@ -19,5 +19,6 @@ public:
 	bool ValidateUser(char[], char[], unsigned);
 	bool FindUserByTel(char*, User&);
 	void EditUserFlight(User&, FlightInfo&);
+	void EditUser(User&);
 };
 

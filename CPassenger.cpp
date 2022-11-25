@@ -7,6 +7,7 @@
 #include "CPassenger.h"
 #include "CFindFlightDlg.h"
 #include "CbookedDlg.h"
+#include "CRechargeDlg.h"
 
 // CPassenger 对话框
 
@@ -73,7 +74,6 @@ END_MESSAGE_MAP()
 void CPassenger::OnBnClickedButton2()//退出登陆的程序
 {
 	CDialogEx::OnOK();
-	// TODO: 在此添加控件通知处理程序代码
 }
 
 
@@ -106,6 +106,17 @@ void CPassenger::OnBnClickedButton1()
 
 void CPassenger::OnBnClickedButton5()
 {
+	//extern User CurrentUser;
+	//extern UsersManager UM;
+	CRechargeDlg New;
+	New.m_Money.Format("%d", CurrentUser.GetMoney());
+	New.m_UserName = CurrentUser.GetName();
+	INT_PTR nRes = New.DoModal();
+	if (nRes == IDOK)
+	
+		MessageBox(_T("充值成功！"));
+	
+	
 	// TODO: 在此添加控件通知处理程序代码
 }
 

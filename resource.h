@@ -14,6 +14,7 @@
 #define IDD_BEFORE_DIALOG               140
 #define IDD_DIALOG1                     142
 #define IDD_BOOKED_DIALOG               142
+#define IDD_RECHARGE_DIALOG             144
 #define IDC_USERNAME                    1000
 #define IDC_PASSWORD                    1001
 #define IDC_EDIT_TEL                    1002
@@ -47,7 +48,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        144
+#define _APS_NEXT_RESOURCE_VALUE        146
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1033
 #define _APS_NEXT_SYMED_VALUE           101

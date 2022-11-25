@@ -188,6 +188,7 @@
     <ClInclude Include="CFindFlightDlg.h" />
     <ClInclude Include="CityManager.h" />
     <ClInclude Include="CPassenger.h" />
+    <ClInclude Include="CRechargeDlg.h" />
     <ClInclude Include="CRegister.h" />
     <ClInclude Include="CResetDialog1.h" />
     <ClInclude Include="FlightInfo.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="CFindFlightDlg.cpp" />
     <ClCompile Include="CityManager.cpp" />
     <ClCompile Include="CPassenger.cpp" />
+    <ClCompile Include="CRechargeDlg.cpp" />
     <ClCompile Include="CRegister.cpp" />
     <ClCompile Include="CResetDialog1.cpp" />
     <ClCompile Include="FlightManager.cpp" />

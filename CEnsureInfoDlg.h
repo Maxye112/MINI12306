@@ -30,5 +30,6 @@ public:
 	CString mFlightType;
 	CString mCNT;
 	CString mTotal;
+	int tot;
 	afx_msg void OnBnClickedOk();
 };

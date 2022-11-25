@@ -156,3 +156,11 @@ void UsersManager::EditUserFlight(User& t, FlightInfo & r) {
 			it->BookedList.push_back(r);
 	}
 }
+
+void UsersManager::EditUser(User& t) {
+	vector<User>::iterator it;
+	for (it = UserList.begin(); it != UserList.end(); ++it) {
+		if (strcmp(t.GetTel(), it->GetTel()) == 0)
+			*it =t;
+	}
+}

@@ -96,6 +96,8 @@ void CFindFlightDlg::OnBnClickedRadio1()
 
 void CFindFlightDlg::OnBnClickedOk()
 {
+	extern User CurrentUser;
+	extern UsersManager UM;
 	UpdateData(TRUE);
 	int t = m_ListCtrl.GetSelectionMark();
 	if (t == -1)
@@ -143,12 +145,11 @@ void CFindFlightDlg::OnBnClickedOk()
 		char yuan[] = "元", zhang[] = "张";
 		Ensure.mCNT = CNT + zhang;
 		CString Yuan = yuan;
-		Ensure.mTotal = tot + Yuan;
+		Ensure.mTotal = tot;
+		Ensure.tot = Total;
 		nRES = Ensure.DoModal();
-		//extern UsersManager UM;
 		if (nRES == IDOK)
 		{
-			extern User CurrentUser;
 			FM.EditFlight(tmp.GetNum(), tmp.GetDate(), tmp);
 			FlightInfo HaveBooked = tmp;
 			if (nIndex == 0) 
@@ -161,7 +162,7 @@ void CFindFlightDlg::OnBnClickedOk()
 				HaveBooked.SetFirstInfo(1);
 				HaveBooked.SetSecondInfo(0);
 			}
-			
+			CurrentUser.book(Total);
 			CurrentUser.BookedList.push_back(HaveBooked);
 			UM.EditUserFlight(CurrentUser, HaveBooked);
 			MessageBox(_T("购买成功！"));

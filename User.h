@@ -43,5 +43,5 @@ public:
 	void Recharge(int t) { Money += t; } //≥‰÷µ
 	char* GetID(){ return IDNum; }
 	int GetMoney() { return Money; }
-	
+	void book(int c) { Money = Money - c; }
 };

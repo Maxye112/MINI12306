@@ -22,7 +22,7 @@ CEnsureInfoDlg::CEnsureInfoDlg(CWnd* pParent /*=nullptr*/)
 	, mCNT(_T(""))
 	, mTotal(_T(""))
 {
-
+	tot = 0;
 }
 
 CEnsureInfoDlg::~CEnsureInfoDlg()
@@ -53,6 +53,14 @@ END_MESSAGE_MAP()
 
 void CEnsureInfoDlg::OnBnClickedOk()
 {
+	extern User CurrentUser;
+	CString tmp;
+	if (CurrentUser.GetMoney() < tot)
+	{
+		AfxMessageBox("余额不足！请充值");
+		CDialogEx::OnCancel();
+	}
+	else
 	// TODO: 在此添加控件通知处理程序代码
-	CDialogEx::OnOK();
+		CDialogEx::OnOK();
 }
