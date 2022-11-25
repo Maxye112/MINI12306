@@ -59,25 +59,30 @@ void CResetDialog1::OnBnClickedOk()
 			AfxMessageBox(_T("两次输入密码不一致！请重新输入！"), MB_OK | MB_ICONERROR, 0);
 		}
 		else {
-			char* tel = Tel.GetBuffer(Tel.GetLength());
-			if (UM.FindUserByTel(tel, CurrentUser)) 
+			if (Tel.GetLength() != 11)
+				AfxMessageBox(_T("请检查手机号的输入！"));
+			else
 			{
-				char* StdTel = CurrentUser.GetTel();
-				char* StdName = CurrentUser.GetName();
-				char* StdID = CurrentUser.GetID();
-				int StdIndex = CurrentUser.GetUserType();
-				if (!strcmp(StdName, Name) && !strcmp(StdID, ID))
+				char* tel = Tel.GetBuffer(Tel.GetLength());
+				if (UM.FindUserByTel(tel, CurrentUser))
 				{
-					CurrentUser.SetPassword(PW.GetBuffer(PW.GetLength()));
-					UM.EditUser(CurrentUser);
-					MessageBox(_T("用户密码重置成功！"));
-					CDialogEx::OnOK();
+					char* StdTel = CurrentUser.GetTel();
+					char* StdName = CurrentUser.GetName();
+					char* StdID = CurrentUser.GetID();
+					int StdIndex = CurrentUser.GetUserType();
+					if (!strcmp(StdName, Name) && !strcmp(StdID, ID))
+					{
+						CurrentUser.SetPassword(PW.GetBuffer(PW.GetLength()));
+						UM.EditUser(CurrentUser);
+						MessageBox(_T("用户密码重置成功！"));
+						CDialogEx::OnOK();
+					}
+					else
+						AfxMessageBox(_T("请检查输入是否有误！"), MB_OK | MB_ICONERROR, 0);
 				}
 				else
-					AfxMessageBox(_T("请检查输入是否有误！"), MB_OK | MB_ICONERROR, 0);
+					AfxMessageBox(_T("该用户未注册！请检查输入是否有误！"), MB_OK | MB_ICONERROR, 0);
 			}
-			else
-				AfxMessageBox(_T("该用户未注册！请检查输入是否有误！"), MB_OK | MB_ICONERROR, 0);
 		}
 
 }

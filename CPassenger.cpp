@@ -8,7 +8,7 @@
 #include "CFindFlightDlg.h"
 #include "CbookedDlg.h"
 #include "CRechargeDlg.h"
-
+#include "EditInfoDlg.h"
 // CPassenger 对话框
 
 IMPLEMENT_DYNAMIC(CPassenger, CDialogEx)
@@ -100,8 +100,6 @@ void CPassenger::OnBnClickedButton1()
 		query.Ori = Ori, query.Dest = Dest, query.Date = Date;
 		query.DoModal();
 	}
-	//MessageBox(Date);
-	// TODO: 在此添加控件通知处理程序代码
 }
 
 
@@ -113,7 +111,6 @@ void CPassenger::OnBnClickedButton5()
 	INT_PTR nRes = New.DoModal();
 	if (nRes == IDOK)
 		MessageBox(_T("充值成功！"));
-	// TODO: 在此添加控件通知处理程序代码
 }
 
 
@@ -127,8 +124,16 @@ void CPassenger::OnBnClickedButton4()
 
 void CPassenger::OnBnClickedButton3()
 {
+	EditInfoDlg New;
 	extern User CurrentUser;
-
+	New.mName = CurrentUser.GetName();
+	New.mID = CurrentUser.GetID();
+	std::string c = CurrentUser.GetTel();
+	c[3] = c[4] = c[5] = c[6] = '*';
+	New.mCurrentTel = c.c_str();
+	New.DoModal();
+	m_UserName = CurrentUser.GetName();
+	SetDlgItemText(IDC_EDIT1,m_UserName);
 	//修改用户信息
 }
 

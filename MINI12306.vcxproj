@@ -191,6 +191,7 @@
     <ClInclude Include="CRechargeDlg.h" />
     <ClInclude Include="CRegister.h" />
     <ClInclude Include="CResetDialog1.h" />
+    <ClInclude Include="EditInfoDlg.h" />
     <ClInclude Include="FlightInfo.h" />
     <ClInclude Include="FlightManager.h" />
     <ClInclude Include="framework.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="CRechargeDlg.cpp" />
     <ClCompile Include="CRegister.cpp" />
     <ClCompile Include="CResetDialog1.cpp" />
+    <ClCompile Include="EditInfoDlg.cpp" />
     <ClCompile Include="FlightManager.cpp" />
     <ClCompile Include="ManagerDlg.cpp" />
     <ClCompile Include="MINI12306.cpp" />

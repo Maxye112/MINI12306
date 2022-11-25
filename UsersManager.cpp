@@ -24,6 +24,7 @@ UsersManager::UsersManager() {
 		unsigned n = 0;
 		f.read((char*)&n, sizeof(unsigned));
 		User NewU(Name, Password, Tel, type, money);
+		NewU.SetID(ID);
 		if (n) 
 			for (int j = 0; j < n; ++j) {
 				char No[10], Date[20], Dest[20], Ori[20], ST[10], AT[20];
@@ -161,6 +162,6 @@ void UsersManager::EditUser(User& t) {
 	vector<User>::iterator it;
 	for (it = UserList.begin(); it != UserList.end(); ++it) {
 		if (strcmp(t.GetTel(), it->GetTel()) == 0)
-			*it =t;
+			*it = t;
 	}
 }

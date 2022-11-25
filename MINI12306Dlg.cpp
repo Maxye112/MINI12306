@@ -177,29 +177,33 @@ void CMINI12306Dlg::OnBnClickedOk()
 		AfxMessageBox(_T("请完整填写信息！"), MB_OK | MB_ICONERROR, 0);
 	else
 	{
-		if (!UM.ValidateUser(Tel, Pw, Typ))
-			AfxMessageBox(_T("请检查用户是否注册，或者检查手机号和密码和用户类型！"), MB_OK | MB_ICONERROR, 0);
-		else
-			if (Typ == 0)
-			{
-				//用户端
-				CPassenger PasDlg;
-				extern User CurrentUser;
-				UM.FindUserByTel(Tel, CurrentUser);
-				PasDlg.m_UserName = CurrentUser.GetName();
-				MessageBox(_T("登录成功！"));
-				GetDlgItem(IDC_EDIT_TEL)->SetWindowTextA("");
-				GetDlgItem(IDC_EDIT_PASSWORD)->SetWindowTextA("");
-				ShowWindow(SW_HIDE);
-				INT_PTR New = PasDlg.DoModal();
-				if (IDOK == New)
-					ShowWindow(SW_NORMAL);
-				else CDialogEx::OnOK();
-			}
+		if (ITEL.GetLength() != 11)
+			AfxMessageBox(_T("请检查手机号的输入！"));
+		else{
+			if (!UM.ValidateUser(Tel, Pw, Typ))
+				AfxMessageBox(_T("请检查用户是否注册，或者检查手机号和密码和用户类型！"), MB_OK | MB_ICONERROR, 0);
 			else
-			{
-				//管理端
-			}
+				if (Typ == 0)
+				{
+					//用户端
+					static CPassenger PasDlg;
+					extern User CurrentUser;
+					UM.FindUserByTel(Tel, CurrentUser);
+					PasDlg.m_UserName = CurrentUser.GetName();
+					MessageBox(_T("登录成功！"));
+					GetDlgItem(IDC_EDIT_TEL)->SetWindowTextA("");
+					GetDlgItem(IDC_EDIT_PASSWORD)->SetWindowTextA("");
+					ShowWindow(SW_HIDE);
+					INT_PTR New = PasDlg.DoModal();
+					if (IDOK == New)
+						ShowWindow(SW_NORMAL);
+					else CDialogEx::OnOK();
+				}
+				else
+				{
+					//管理端
+				}
+		}
 	}
 	// TODO: 在此添加控件通知处理程序代码
 	//CDialogEx::OnOK();

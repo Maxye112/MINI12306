@@ -80,23 +80,26 @@ void CRegister::OnBnClickedOk()
 	if (NAME == "" || ID == "" || PW == "" || APW == "")
 		AfxMessageBox(_T("请完整填写信息！"), MB_OK | MB_ICONERROR, 0);
 	else {
-		char* name = NAME.GetBuffer(NAME.GetLength());
-		char* id = ID.GetBuffer(ID.GetLength());
-		char* pw = PW.GetBuffer(PW.GetLength());
-		char* Apw = APW.GetBuffer(APW.GetLength());
-		char* tel = TEL.GetBuffer(TEL.GetLength());
-		if (strcmp(pw, Apw) != 0)
-			AfxMessageBox(_T("两次输入密码不一致，请重新输入！"), MB_OK | MB_ICONERROR, 0);
-		else
-		{
-			if (UM.AddUser(name, pw, tel, id, type)) 
-			{
-				MessageBox(_T("用户注册成功！"));
-				CDialogEx::OnOK();
-			}
+		if (TEL.GetLength() != 11)
+			AfxMessageBox(_T("请检查手机号的输入！"), MB_OK | MB_ICONERROR, 0);
+		else{
+			char* name = NAME.GetBuffer(NAME.GetLength());
+			char* id = ID.GetBuffer(ID.GetLength());
+			char* pw = PW.GetBuffer(PW.GetLength());
+			char* Apw = APW.GetBuffer(APW.GetLength());
+			char* tel = TEL.GetBuffer(TEL.GetLength());
+			if (strcmp(pw, Apw) != 0)
+				AfxMessageBox(_T("两次输入密码不一致，请重新输入！"), MB_OK | MB_ICONERROR, 0);
 			else
-				AfxMessageBox(_T("用户已存在！"), MB_OK | MB_ICONERROR, 0);
-			// TODO: 在此添加控件通知处理程序代码
+			{
+				if (UM.AddUser(name, pw, tel, id, type))
+				{
+					MessageBox(_T("用户注册成功！"));
+					CDialogEx::OnOK();
+				}
+				else
+					AfxMessageBox(_T("用户已存在！"), MB_OK | MB_ICONERROR, 0);
+			}
 		}
 	}
 }

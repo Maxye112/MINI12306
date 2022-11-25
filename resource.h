@@ -17,6 +17,7 @@
 #define IDD_RECHARGE_DIALOG             144
 #define IDD_MANAGER_DIALOG              146
 #define IDD_FIND_DIALOG                 148
+#define IDD_EDITINFO_DIALOG             150
 #define IDC_USERNAME                    1000
 #define IDC_PASSWORD                    1001
 #define IDC_EDIT_TEL                    1002
@@ -29,11 +30,13 @@
 #define IDC_EDIT2                       1010
 #define IDC_COMBO1                      1011
 #define IDC_EDIT5                       1011
+#define IDC_EDIT10                      1012
 #define IDC_EDIT1                       1013
 #define IDC_EDIT3                       1014
 #define IDC_EDIT4                       1015
 #define IDC_EDIT6                       1016
 #define IDC_EDIT7                       1017
+#define IDC_EDIT11                      1017
 #define IDC_EDIT8                       1018
 #define IDC_EDIT9                       1019
 #define IDC_BUTTON2                     1021
@@ -52,7 +55,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        150
+#define _APS_NEXT_RESOURCE_VALUE        152
 #define _APS_NEXT_COMMAND_VALUE         32771
 #define _APS_NEXT_CONTROL_VALUE         1034
 #define _APS_NEXT_SYMED_VALUE           101
