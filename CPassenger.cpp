@@ -19,7 +19,16 @@ BOOL CPassenger::OnInitDialog()
 	CenterWindow();
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
-
+	CFont* pFont = new CFont;
+	//LOGFONT lf;
+	if (pFont)
+	{
+		pFont->CreateFont(30, 0, 0, 0, 100,
+			FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+			CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FF_SWISS, "新宋体");
+		GetDlgItem(IDC_EDIT1)->SetFont(pFont);
+		//GetDlgItem(IDC_EDIT_PASSWORD)->SetFont(pFont);
+	}
 	CMenu* pSysMenu = GetSystemMenu(FALSE);
 	if (pSysMenu != nullptr)
 	{
@@ -33,6 +42,12 @@ BOOL CPassenger::OnInitDialog()
 			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
 		}
 	}
+	CString strBmpPath = _T(".\\res\\Passenger.png");
+	CImage img;
+	img.Load(strBmpPath);
+	CBitmap bmpTmp;
+	bmpTmp.Attach(img.Detach());
+	m_bkBrush.CreatePatternBrush(&bmpTmp);
 	extern CityManager CM;
 	int size = CM.CL.size();
 	for (int i = 0; i < size; ++i) 
@@ -53,7 +68,6 @@ BOOL CPassenger::OnInitDialog()
 	Month.Format("%d", month);
 	Day.Format("%d", day);
 	Date = Year + "/" + Month + "/" + Day;
-	//char* date = Date.GetBuffer(Date.GetLength());
 	for (int i = 0; i < size; ++i)
 	{
 		if (FM.FQ[i].GetDate() != Date) 
@@ -84,6 +98,13 @@ void CPassenger::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO1, mOri);
 	DDX_Control(pDX, IDC_COMBO2, mDest);
 	DDX_Control(pDX, IDC_COMBO3, mNum);
+	DDX_Control(pDX, IDC_EDIT1, UserName);
+	DDX_Control(pDX, IDC_BUTTON1, Book);
+	DDX_Control(pDX, IDC_BUTTON5, Recharge);
+	DDX_Control(pDX, IDC_BUTTON7, FindByNum);
+	DDX_Control(pDX, IDC_BUTTON4, Booked);
+	DDX_Control(pDX, IDC_BUTTON3, EditInfo);
+	DDX_Control(pDX, IDC_BUTTON2, Exit);
 }
 
 
@@ -94,6 +115,7 @@ BEGIN_MESSAGE_MAP(CPassenger, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON4, &CPassenger::OnBnClickedButton4)
 	ON_BN_CLICKED(IDC_BUTTON3, &CPassenger::OnBnClickedButton3)
 	ON_BN_CLICKED(IDC_BUTTON7, &CPassenger::OnBnClickedButton7)
+	ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -125,7 +147,10 @@ void CPassenger::OnBnClickedButton1()
 		Day.Format("%d", day);
 		Date = Year + "/" + Month + "/" + Day;
 		CFindFlightDlg query;
-		query.Ori = Ori, query.Dest = Dest, query.Date = Date;
+		char* ori = Ori.GetBuffer(Ori.GetLength());
+		char* dest = Dest.GetBuffer(Dest.GetLength());
+		char* date = Date.GetBuffer(Date.GetLength());
+		FM.SearchFlightByPlace(ori, dest, date, query.List);
 		query.DoModal();
 	}
 }
@@ -168,7 +193,8 @@ void CPassenger::OnBnClickedButton3()
 
 void CPassenger::OnBnClickedButton7()
 {
-	CString Year, Month, Day, Date;
+	CString Year, Month, Day, Date, Num;
+	GetDlgItemText(IDC_COMBO3, Num);
 	COleDateTime m_Date;
 	m_DTCtrl.GetTime(m_Date);
 	int year = m_Date.GetYear();
@@ -178,4 +204,24 @@ void CPassenger::OnBnClickedButton7()
 	Month.Format("%d", month);
 	Day.Format("%d", day);
 	Date = Year + "/" + Month + "/" + Day;
+	extern FlightManager FM;
+	CFindFlightDlg qry;
+	char* date = Date.GetBuffer(Date.GetLength());
+	char* num = Num.GetBuffer(Num.GetLength());
+	if (FM.SearchFlightByNum(num, date, qry.List))
+		qry.DoModal();
+	else
+		AfxMessageBox("该日期下无此航班！请重新输入！");
+}
+
+
+HBRUSH CPassenger::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+	if (pWnd == this)
+		return m_bkBrush;
+	// TODO:  在此更改 DC 的任何特性
+
+	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
+	return hbr;
 }

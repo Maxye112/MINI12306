@@ -40,4 +40,13 @@ public:
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedRadio1();
 	afx_msg void OnBnClickedRadio2();
+	CBrush m_bkBrush;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg LRESULT OnNcHitTest(CPoint point);
+	CEdit MTel;
+	CEdit MPW;
+	CCustomDrawBtn Reset;
+	CCustomDrawBtn Register;
+	CCustomDrawBtn Login;
+	CCustomDrawGroupBox R1, R2;
 };

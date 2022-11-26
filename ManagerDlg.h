@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "afxdialogex.h"
-#include "ComboxAutoFill.h"
+
 
 // ManagerDlg 对话框
 
@@ -17,13 +17,25 @@ public:
 	enum { IDD = IDD_MANAGER_DIALOG };
 #endif
 
+private:
+	static int col;
+	static bool method;
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CListCtrl mListCtrl;
+	CCustomDrawListCtrl mListCtrl;
 	afx_msg void OnBnClickedButton3();
 	virtual BOOL OnInitDialog();
-	CComboCompletion mCityList;
+	CCustomDrawCombox mCityList;
+	afx_msg void OnBnClickedButton4();
+	
+	static int CALLBACK MyCompareProc(LPARAM, LPARAM, LPARAM);
+	afx_msg void OnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult);
+	afx_msg void OnBnClickedButton1();
+	CBrush m_bkBrush;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	afx_msg void OnBnClickedButton2();
+	CCustomDrawBtn addf, delf, addc, delc;
 };

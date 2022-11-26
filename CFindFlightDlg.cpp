@@ -25,6 +25,7 @@ void CFindFlightDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, m_ListCtrl);
+	DDX_Control(pDX, IDC_RADIO1, F);
 }
 
 BOOL CFindFlightDlg::OnInitDialog()
@@ -34,7 +35,8 @@ BOOL CFindFlightDlg::OnInitDialog()
 	CenterWindow();
 
 	// TODO: 在此添加额外的初始化代码
-	CListCtrl* pListCtrl = (CListCtrl*)GetDlgItem(IDC_LIST1);
+	CCustomDrawListCtrl* pListCtrl = (CCustomDrawListCtrl*)GetDlgItem(IDC_LIST1);
+	pListCtrl->SetRowHeight(20);
 	pListCtrl->SetExtendedStyle(LVS_EX_FLATSB | LVS_EX_FULLROWSELECT | LVS_EX_HEADERDRAGDROP | LVS_EX_GRIDLINES);
 	pListCtrl->InsertColumn(0, _T("航班号"), LVCFMT_CENTER, 60, 0);
 	pListCtrl->InsertColumn(1, _T("出发地"), LVCFMT_CENTER, 80, 0);
@@ -45,11 +47,6 @@ BOOL CFindFlightDlg::OnInitDialog()
 	pListCtrl->InsertColumn(6, _T("一等舱票额"), LVCFMT_CENTER, 80, 0);
 	pListCtrl->InsertColumn(7, _T("二等舱票额"), LVCFMT_CENTER, 80, 0);
 	extern FlightManager FM;
-	vector <FlightInfo> List;
-	char* ori = Ori.GetBuffer(Ori.GetLength());
-	char* dest = Dest.GetBuffer(Dest.GetLength());
-	char* date = Date.GetBuffer(Date.GetLength());
-	FM.SearchFlightByPlace(ori, dest, date, List);
 	int size = (int)List.size();
 	for (int i = 0; i < size; ++i) {
 		FlightInfo tmp = List[i];

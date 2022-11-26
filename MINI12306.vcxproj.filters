@@ -75,7 +75,31 @@
     <ClInclude Include="EditInfoDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ComboxAutoFill.h">
+    <ClInclude Include="CustomDrawBtn.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SkinColors.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CEditEx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDrawCombox.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDrawEdit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDrawGroupBox.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDrawHeaderCtrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomDrawListCtrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AddFlightDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -125,7 +149,31 @@
     <ClCompile Include="EditInfoDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ComboxAutoFill.cpp">
+    <ClCompile Include="CustomDraBtn.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SkinColors.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CEditEx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDrawCombox.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDrawEdit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDrawGroupBox.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDrawHeaderCtrl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomDrawListCtrl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AddFlightDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

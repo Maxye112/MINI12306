@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "afxdialogex.h"
-#include "ComboxAutoFill.h"
 
 // CPassenger 对话框
 
@@ -31,7 +30,16 @@ public:
 	afx_msg void OnBnClickedButton4();
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton7();
-	CComboCompletion mOri;
-	CComboCompletion mDest;
-	CComboCompletion mNum;
+	CCustomDrawCombox  mOri;
+	CCustomDrawCombox  mDest;
+	CCustomDrawCombox  mNum;
+	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
+	CBrush m_bkBrush;
+	CCustomDrawEdit UserName;
+	CCustomDrawBtn Book;
+	CCustomDrawBtn Recharge;
+	CCustomDrawBtn FindByNum;
+	CCustomDrawBtn Booked;
+	CCustomDrawBtn EditInfo;
+	CCustomDrawBtn Exit;
 };

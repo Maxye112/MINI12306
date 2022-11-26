@@ -65,6 +65,13 @@ CMINI12306Dlg::CMINI12306Dlg(CWnd* pParent /*=nullptr*/)
 void CMINI12306Dlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_EDIT_TEL, MTel);
+	DDX_Control(pDX, IDC_EDIT_PASSWORD, MPW);
+	DDX_Control(pDX, IDC_BUTTON2, Reset);
+	DDX_Control(pDX, IDC_BUTTONRegi, Register);
+	DDX_Control(pDX, IDOK, Login);
+	DDX_Control(pDX, IDC_RADIO1, R1);
+	DDX_Control(pDX, IDC_RADIO2, R2);
 }
 
 BEGIN_MESSAGE_MAP(CMINI12306Dlg, CDialogEx)
@@ -76,6 +83,8 @@ BEGIN_MESSAGE_MAP(CMINI12306Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON2, &CMINI12306Dlg::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_RADIO1, &CMINI12306Dlg::OnBnClickedRadio1)
 	ON_BN_CLICKED(IDC_RADIO2, &CMINI12306Dlg::OnBnClickedRadio2)
+	ON_WM_CTLCOLOR()
+	ON_WM_NCHITTEST()
 END_MESSAGE_MAP()
 
 
@@ -85,7 +94,6 @@ BOOL CMINI12306Dlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	ShowWindow(SW_NORMAL);
-	CenterWindow();
 	// 将“关于...”菜单项添加到系统菜单中。
 
 	// IDM_ABOUTBOX 必须在系统命令范围内。
@@ -110,9 +118,38 @@ BOOL CMINI12306Dlg::OnInitDialog()
 	//  执行此操作
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
+	MoveWindow(0, 0, 640, 480);
+	CenterWindow();
 
+	CString strBmpPath = _T(".\\res\\LoginUI.png");
+	CImage img;
+	img.Load(strBmpPath);
+	CBitmap bmpTmp;
+	bmpTmp.Attach(img.Detach());
+	m_bkBrush.CreatePatternBrush(&bmpTmp);
+	CFont* pFont = new CFont;
+	//LOGFONT lf;
+	if (pFont)
+	{
+		pFont->CreateFont(30, 0, 0, 0, 100,
+			FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
+			CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FF_SWISS, "Arial");
+		GetDlgItem(IDC_EDIT_TEL)->SetFont(pFont);
+		GetDlgItem(IDC_EDIT_PASSWORD)->SetFont(pFont);
+	}
+	//delete pFont;
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
+
+
+HBRUSH CMINI12306Dlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
+	if (pWnd == this)
+		hbr = m_bkBrush;
+	return hbr;
+}
+
 
 void CMINI12306Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
@@ -196,7 +233,10 @@ void CMINI12306Dlg::OnBnClickedOk()
 					ShowWindow(SW_HIDE);
 					INT_PTR New = PasDlg.DoModal();
 					if (IDOK == New)
+					{
 						ShowWindow(SW_NORMAL);
+						CenterWindow();
+					}
 					else CDialogEx::OnOK();
 				}
 				else
@@ -208,12 +248,12 @@ void CMINI12306Dlg::OnBnClickedOk()
 					GetDlgItem(IDC_EDIT_PASSWORD)->SetWindowTextA("");
 					ShowWindow(SW_HIDE);
 					INT_PTR New = NewWin.DoModal();
-					CDialogEx::OnOK();
+					ShowWindow(SW_NORMAL);
+					CenterWindow();
+					//CDialogEx::OnOK();
 				}
 		}
 	}
-	// TODO: 在此添加控件通知处理程序代码
-	//CDialogEx::OnOK();
 }
 
 
@@ -226,7 +266,6 @@ void CMINI12306Dlg::OnBnClickedButtonregi()
 
 void CMINI12306Dlg::OnBnClickedButton2()
 {
-	//
 	CResetDialog1 New;
 	GetDlgItemText(IDC_EDIT_TEL, New.mTel);
 	New.DoModal();
@@ -242,4 +281,12 @@ void CMINI12306Dlg::OnBnClickedRadio1()
 void CMINI12306Dlg::OnBnClickedRadio2()
 {
 	Typ = 1;
+}
+
+
+
+LRESULT CMINI12306Dlg::OnNcHitTest(CPoint point)
+{
+	LRESULT ret = CDialogEx::OnNcHitTest(point);
+	return (ret == HTCLIENT) ? HTCAPTION : ret;
 }

@@ -16,8 +16,9 @@
 #define IDD_BOOKED_DIALOG               142
 #define IDD_RECHARGE_DIALOG             144
 #define IDD_MANAGER_DIALOG              146
-#define IDD_FIND_DIALOG                 148
 #define IDD_EDITINFO_DIALOG             150
+#define IDD_DIALOG2                     152
+#define IDD_ADD_DIALOG                  152
 #define IDC_USERNAME                    1000
 #define IDC_PASSWORD                    1001
 #define IDC_EDIT_TEL                    1002
@@ -39,7 +40,9 @@
 #define IDC_EDIT11                      1017
 #define IDC_EDIT8                       1018
 #define IDC_EDIT9                       1019
+#define IDC_EDIT12                      1020
 #define IDC_BUTTON2                     1021
+#define IDC_EDIT13                      1021
 #define IDC_BUTTON6                     1022
 #define IDC_BUTTON1                     1023
 #define IDC_BUTTON3                     1024
@@ -52,14 +55,15 @@
 #define IDC_RADIO2                      1032
 #define IDC_COMBO2                      1034
 #define IDC_COMBO3                      1035
+#define IDC_RADIO3                      1036
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        152
+#define _APS_NEXT_RESOURCE_VALUE        154
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1036
+#define _APS_NEXT_CONTROL_VALUE         1037
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

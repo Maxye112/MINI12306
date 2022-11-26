@@ -9,5 +9,14 @@
 
 // 添加要在此处预编译的标头
 #include "framework.h"
-
+#include "UsersManager.h"
+#include "FlightManager.h"
+#include "CityManager.h"
+#include "CustomDrawBtn.h"
+#include "CustomDrawCombox.h"
+#include "CustomDrawEdit.h"
+#include "CustomDrawGroupBox.h"
+#include "CustomDrawHeaderCtrl.h"
+#include "CustomDrawListCtrl.h"
+#include "SkinColors.h"
 #endif //PCH_H

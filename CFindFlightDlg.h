@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "pch.h"
 #include "afxdialogex.h"
 
 
@@ -25,7 +26,9 @@ protected:
 public:
 	afx_msg void OnBnClickedRadio1();
 	afx_msg void OnBnClickedOk();
-	CListCtrl m_ListCtrl;
+	CCustomDrawListCtrl m_ListCtrl;
 	int nIndex;
 	afx_msg void OnBnClickedRadio2();
+	CCustomDrawGroupBox F;
+	vector <FlightInfo> List;
 };

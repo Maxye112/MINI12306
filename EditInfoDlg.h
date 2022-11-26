@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "pch.h"
 #include "afxdialogex.h"
 
 
@@ -25,6 +26,7 @@ public:
 	CString mName;
 	CString mID;
 	CString mCurrentTel;
+
 	afx_msg void OnBnClickedButton3();
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton4();

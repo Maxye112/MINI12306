@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -183,15 +183,22 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AddFlightDlg.h" />
     <ClInclude Include="CbookedDlg.h" />
+    <ClInclude Include="CEditEx.h" />
     <ClInclude Include="CEnsureInfoDlg.h" />
     <ClInclude Include="CFindFlightDlg.h" />
     <ClInclude Include="CityManager.h" />
-    <ClInclude Include="ComboxAutoFill.h" />
     <ClInclude Include="CPassenger.h" />
     <ClInclude Include="CRechargeDlg.h" />
     <ClInclude Include="CRegister.h" />
     <ClInclude Include="CResetDialog1.h" />
+    <ClInclude Include="CustomDrawBtn.h" />
+    <ClInclude Include="CustomDrawCombox.h" />
+    <ClInclude Include="CustomDrawEdit.h" />
+    <ClInclude Include="CustomDrawGroupBox.h" />
+    <ClInclude Include="CustomDrawHeaderCtrl.h" />
+    <ClInclude Include="CustomDrawListCtrl.h" />
     <ClInclude Include="EditInfoDlg.h" />
     <ClInclude Include="FlightInfo.h" />
     <ClInclude Include="FlightManager.h" />
@@ -201,20 +208,28 @@
     <ClInclude Include="MINI12306Dlg.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SkinColors.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UsersManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddFlightDlg.cpp" />
     <ClCompile Include="CbookedDlg.cpp" />
+    <ClCompile Include="CEditEx.cpp" />
     <ClCompile Include="CEnsureInfoDlg.cpp" />
     <ClCompile Include="CFindFlightDlg.cpp" />
     <ClCompile Include="CityManager.cpp" />
-    <ClCompile Include="ComboxAutoFill.cpp" />
     <ClCompile Include="CPassenger.cpp" />
     <ClCompile Include="CRechargeDlg.cpp" />
     <ClCompile Include="CRegister.cpp" />
     <ClCompile Include="CResetDialog1.cpp" />
+    <ClCompile Include="CustomDraBtn.cpp" />
+    <ClCompile Include="CustomDrawCombox.cpp" />
+    <ClCompile Include="CustomDrawEdit.cpp" />
+    <ClCompile Include="CustomDrawGroupBox.cpp" />
+    <ClCompile Include="CustomDrawHeaderCtrl.cpp" />
+    <ClCompile Include="CustomDrawListCtrl.cpp" />
     <ClCompile Include="EditInfoDlg.cpp" />
     <ClCompile Include="FlightManager.cpp" />
     <ClCompile Include="ManagerDlg.cpp" />
@@ -226,6 +241,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SkinColors.cpp" />
     <ClCompile Include="UsersManager.cpp" />
   </ItemGroup>
   <ItemGroup>
