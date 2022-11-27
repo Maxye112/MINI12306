@@ -23,5 +23,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButton1();
-	CListCtrl mListCtrl;
+	CCustomDrawListCtrl m_ListCtrl;
 };

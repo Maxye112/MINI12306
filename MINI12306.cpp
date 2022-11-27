@@ -16,6 +16,8 @@ FlightInfo CurrentFlight;
 UsersManager UM;
 FlightManager FM;
 CityManager CM;
+std::map<int, CString> StatusFuc;
+std::map<CString, int> AStatusFuc;
 // CMINI12306App
 
 BEGIN_MESSAGE_MAP(CMINI12306App, CWinApp)
@@ -42,8 +44,12 @@ CMINI12306App theApp;
 BOOL CMINI12306App::InitInstance()
 {
 	CWinApp::InitInstance();
-
-
+	StatusFuc[0] = "停运";
+	StatusFuc[1] = "正常";
+	StatusFuc[2] = "晚点";
+	AStatusFuc["停运"] = 0;
+	AStatusFuc["正常"] = 1;
+	AStatusFuc["晚点"] = 2;
 	// 创建 shell 管理器，以防对话框包含
 	// 任何 shell 树视图控件或 shell 列表视图控件。
 	CShellManager *pShellManager = new CShellManager;

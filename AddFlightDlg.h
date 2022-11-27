@@ -28,4 +28,5 @@ public:
 	CButton Edit;
 	afx_msg void OnBnClickedRadio2();
 	afx_msg void OnBnClickedOk2();
+	afx_msg void OnBnClickedRadio3();
 };

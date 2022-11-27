@@ -19,4 +19,5 @@
 #include "CustomDrawHeaderCtrl.h"
 #include "CustomDrawListCtrl.h"
 #include "SkinColors.h"
+#include <map>
 #endif //PCH_H

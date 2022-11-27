@@ -14,15 +14,15 @@ private:
 	char Date[20] = {}; //出发日期
 	char Origin[20] = {}; //出发地点
 	char Destination[20] = {}; //到达地点
-	bool Running;
+	int Sta;//状态——1表示正常，2表示晚点，0表示取消
 public:
 	FlightInfo(char* Num, char* Date) 
 	{
 		strcpy_s(No, Num);
 		strcpy_s(this->Date, Date);
-		Running = true;
+		Sta = 1;
 	}
-	FlightInfo() { Running = true; }
+	FlightInfo() { Sta = 1; }
 	~FlightInfo() {}
 	char* GetNum(void) { return No; }
 	char* GetStartTime(void) { return StartTime; }
@@ -32,7 +32,7 @@ public:
 	char* GetDestination(void) { return Destination; }
 	Seats GetFirst(void) { return First; }
 	Seats GetSecond(void) { return Second; }
-	bool GetStatus(void) { return Running; }
+	int GetStatus(void) { return Sta; }
 	void SetFirstInfo(int c, int p) 
 	{
 		First.cnt = c, First.price = p;
@@ -52,5 +52,5 @@ public:
 		strcpy_s(StartTime, s); 
 		strcpy_s(ArriveTime, a); 
 	}
-	void SetStatus(bool t) { Running = t; }
+	void SetStatus(int t) { Sta = t; }
 };

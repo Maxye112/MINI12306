@@ -25,7 +25,7 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CCustomDrawListCtrl mListCtrl;
+	CCustomDrawListCtrl m_ListCtrl;
 	afx_msg void OnBnClickedButton3();
 	virtual BOOL OnInitDialog();
 	CCustomDrawCombox mCityList;

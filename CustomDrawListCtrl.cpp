@@ -118,10 +118,11 @@ void CCustomDrawListCtrl::DrawItem(LPDRAWITEMSTRUCT lpDrawItemStruct)
 			CString str1 = lpBuffer;
 			CString str2 = "正常";
 			CString str3 = "停运";
+			CString str4 = "晚点";
 			if((nCol == colCount-1) && str1.Compare(str2) == 0){//改变最后一列内容的颜色
 				pDC->SetTextColor(m_highLightColColor);
 			}
-			else if ((nCol == colCount-1) && str1.Compare(str3) == 0)
+			else if (((nCol == colCount - 1) && (str1.Compare(str3) == 0)) || str1.Compare(str4) == 0)
 			{
 				pDC->SetTextColor(m_highLightColColor2);
 			}

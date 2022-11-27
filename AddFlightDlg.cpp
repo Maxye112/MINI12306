@@ -38,6 +38,7 @@ BEGIN_MESSAGE_MAP(AddFlightDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RADIO1, &AddFlightDlg::OnBnClickedRadio1)
 	ON_BN_CLICKED(IDC_RADIO2, &AddFlightDlg::OnBnClickedRadio2)
 	ON_BN_CLICKED(IDOK2, &AddFlightDlg::OnBnClickedOk2)
+	ON_BN_CLICKED(IDC_RADIO3, &AddFlightDlg::OnBnClickedRadio3)
 END_MESSAGE_MAP()
 
 
@@ -87,44 +88,50 @@ void AddFlightDlg::OnBnClickedOk()
 	GetDlgItemText(IDC_EDIT13, Sp);
 	GetDlgItemText(IDC_EDIT6, ST);
 	GetDlgItemText(IDC_EDIT7, AT);
-	COleDateTime m_Date;
-	m_DTCtrl.GetTime(m_Date);
-	int year = m_Date.GetYear();
-	int month = m_Date.GetMonth();
-	int day = m_Date.GetDay();
-	Year.Format("%d", year);
-	Month.Format("%d", month);
-	Day.Format("%d", day);
-	Date = Year + "/" + Month + "/" + Day;
-	char* ori = O.GetBuffer(O.GetLength());
-	char* dest = D.GetBuffer(D.GetLength());
-	char* no = No.GetBuffer(No.GetLength());
-	char* date = Date.GetBuffer(Date.GetLength());
-	char* st = ST.GetBuffer(ST.GetLength());
-	char* at = AT.GetBuffer(AT.GetLength());
-	FlightInfo NewFlight(no, date);
-	NewFlight.SetFirstInfo(atoi(Fc), atoi(Fp));
-	NewFlight.SetSecondInfo(atoi(Sc), atoi(Sp));
-	NewFlight.SetTime(st, at);
-	NewFlight.SetOrigin(ori);
-	NewFlight.SetDestination(dest);
-	extern FlightManager FM;
-	extern CityManager CM;
-	if (FM.AddFlight(NewFlight))
-	{
-		CM.EditCity(ori, 0);
-		CM.EditCity(dest, 0);
-		MessageBox("航班添加成功！");
-		CDialogEx::OnOK();
-	}
+	if (O == "" || D == "" || No == "" || Fp == "" || Fc == "" || Sc == "" || Sp == "" || ST == "" || AT == "" || nIndex == -1)
+		AfxMessageBox("请完整填写信息！");
 	else
-		AfxMessageBox("航班已存在！");
+	{
+		COleDateTime m_Date;
+		m_DTCtrl.GetTime(m_Date);
+		int year = m_Date.GetYear();
+		int month = m_Date.GetMonth();
+		int day = m_Date.GetDay();
+		Year.Format("%d", year);
+		Month.Format("%d", month);
+		Day.Format("%d", day);
+		Date = Year + "/" + Month + "/" + Day;
+		char* ori = O.GetBuffer(O.GetLength());
+		char* dest = D.GetBuffer(D.GetLength());
+		char* no = No.GetBuffer(No.GetLength());
+		char* date = Date.GetBuffer(Date.GetLength());
+		char* st = ST.GetBuffer(ST.GetLength());
+		char* at = AT.GetBuffer(AT.GetLength());
+		FlightInfo NewFlight(no, date);
+		NewFlight.SetFirstInfo(atoi(Fc), atoi(Fp));
+		NewFlight.SetSecondInfo(atoi(Sc), atoi(Sp));
+		NewFlight.SetTime(st, at);
+		NewFlight.SetOrigin(ori);
+		NewFlight.SetDestination(dest);
+		NewFlight.SetStatus(nIndex);
+		extern FlightManager FM;
+		extern CityManager CM;
+		if (FM.AddFlight(NewFlight))
+		{
+			CM.EditCity(ori, 0);
+			CM.EditCity(dest, 0);
+			MessageBox("航班添加成功！");
+			CDialogEx::OnOK();
+		}
+		else
+			AfxMessageBox("航班已存在！");
+	}
 }
 
 
 void AddFlightDlg::OnBnClickedRadio1() { nIndex = 1; }
 void AddFlightDlg::OnBnClickedRadio2() { nIndex = 0; }
-
+void AddFlightDlg::OnBnClickedRadio3() { nIndex = 2; }
 
 void AddFlightDlg::OnBnClickedOk2()
 {
@@ -138,34 +145,43 @@ void AddFlightDlg::OnBnClickedOk2()
 	GetDlgItemText(IDC_EDIT13, Sp);
 	GetDlgItemText(IDC_EDIT6, ST);
 	GetDlgItemText(IDC_EDIT7, AT);
-	COleDateTime m_Date;
-	m_DTCtrl.GetTime(m_Date);
-	int year = m_Date.GetYear();
-	int month = m_Date.GetMonth();
-	int day = m_Date.GetDay();
-	Year.Format("%d", year);
-	Month.Format("%d", month);
-	Day.Format("%d", day);
-	Date = Year + "/" + Month + "/" + Day;
-	char* ori = O.GetBuffer(O.GetLength());
-	char* dest = D.GetBuffer(D.GetLength());
-	char* no = No.GetBuffer(No.GetLength());
-	char* date = Date.GetBuffer(Date.GetLength());
-	char* st = ST.GetBuffer(ST.GetLength());
-	char* at = AT.GetBuffer(AT.GetLength());
-	FlightInfo NewFlight(no, date);
-	NewFlight.SetFirstInfo(atoi(Fc), atoi(Fp));
-	NewFlight.SetSecondInfo(atoi(Sc), atoi(Sp));
-	NewFlight.SetTime(st, at);
-	NewFlight.SetOrigin(ori);
-	NewFlight.SetDestination(dest);
-	extern FlightManager FM;
-	extern CityManager CM;
-	if (FM.EditFlight(no, date, NewFlight))
-	{
-		MessageBox("航班信息修改成功！");
-		CDialogEx::OnOK();
-	}
+	if (O == "" || D == "" || No == "" || Fp == "" || Fc == "" || Sc == "" || Sp == "" || ST == "" || AT == "" || nIndex == -1)
+		AfxMessageBox("请完整填写信息！");
 	else
-		AfxMessageBox("航班不存在！修改失败！");
+	{
+		COleDateTime m_Date;
+		m_DTCtrl.GetTime(m_Date);
+		int year = m_Date.GetYear();
+		int month = m_Date.GetMonth();
+		int day = m_Date.GetDay();
+		Year.Format("%d", year);
+		Month.Format("%d", month);
+		Day.Format("%d", day);
+		Date = Year + "/" + Month + "/" + Day;
+		char* ori = O.GetBuffer(O.GetLength());
+		char* dest = D.GetBuffer(D.GetLength());
+		char* no = No.GetBuffer(No.GetLength());
+		char* date = Date.GetBuffer(Date.GetLength());
+		char* st = ST.GetBuffer(ST.GetLength());
+		char* at = AT.GetBuffer(AT.GetLength());
+		FlightInfo NewFlight(no, date);
+		NewFlight.SetFirstInfo(atoi(Fc), atoi(Fp));
+		NewFlight.SetSecondInfo(atoi(Sc), atoi(Sp));
+		NewFlight.SetTime(st, at);
+		NewFlight.SetOrigin(ori);
+		NewFlight.SetDestination(dest);
+		NewFlight.SetStatus(nIndex);
+		extern FlightManager FM;
+		extern CityManager CM;
+		if (FM.EditFlight(no, date, NewFlight))
+		{
+			MessageBox("航班信息修改成功！");
+			CDialogEx::OnOK();
+		}
+		else
+			AfxMessageBox("航班不存在！修改失败！");
+	}
 }
+
+
+

@@ -30,17 +30,17 @@ BOOL CFindFlightDlg::OnInitDialog()
 	CenterWindow();
 
 	// TODO: 在此添加额外的初始化代码
-	CCustomDrawListCtrl* pListCtrl = (CCustomDrawListCtrl*)GetDlgItem(IDC_LIST1);
-	pListCtrl->SetRowHeight(20);
-	pListCtrl->SetExtendedStyle(LVS_EX_FLATSB | LVS_EX_FULLROWSELECT | LVS_EX_HEADERDRAGDROP | LVS_EX_GRIDLINES);
-	pListCtrl->InsertColumn(0, _T("航班号"), LVCFMT_CENTER, 60, 0);
-	pListCtrl->InsertColumn(1, _T("出发地"), LVCFMT_CENTER, 80, 0);
-	pListCtrl->InsertColumn(2, _T("目的地"), LVCFMT_CENTER, 80, 0);
-	pListCtrl->InsertColumn(3, _T("日期"), LVCFMT_CENTER, 80, 0);
-	pListCtrl->InsertColumn(4, _T("起飞时间"), LVCFMT_CENTER, 60, 0);
-	pListCtrl->InsertColumn(5, _T("到达时间"), LVCFMT_CENTER, 60, 0);
-	pListCtrl->InsertColumn(6, _T("一等舱票额"), LVCFMT_CENTER, 80, 0);
-	pListCtrl->InsertColumn(7, _T("二等舱票额"), LVCFMT_CENTER, 80, 0);
+	//CCustomDrawListCtrl* pListCtrl = (CCustomDrawListCtrl*)GetDlgItem(IDC_LIST1);
+	m_ListCtrl.SetRowHeight(20);
+	m_ListCtrl.SetExtendedStyle(LVS_EX_FLATSB | LVS_EX_FULLROWSELECT | LVS_EX_HEADERDRAGDROP | LVS_EX_GRIDLINES);
+	m_ListCtrl.InsertColumn(0, _T("航班号"), LVCFMT_CENTER, 60, 0);
+	m_ListCtrl.InsertColumn(1, _T("出发地"), LVCFMT_CENTER, 80, 0);
+	m_ListCtrl.InsertColumn(2, _T("目的地"), LVCFMT_CENTER, 80, 0);
+	m_ListCtrl.InsertColumn(3, _T("日期"), LVCFMT_CENTER, 80, 0);
+	m_ListCtrl.InsertColumn(4, _T("起飞时间"), LVCFMT_CENTER, 60, 0);
+	m_ListCtrl.InsertColumn(5, _T("到达时间"), LVCFMT_CENTER, 60, 0);
+	m_ListCtrl.InsertColumn(6, _T("一等舱票额"), LVCFMT_CENTER, 80, 0);
+	m_ListCtrl.InsertColumn(7, _T("二等舱票额"), LVCFMT_CENTER, 80, 0);
 	extern FlightManager FM;
 	int size = (int)List.size();
 	for (int i = 0; i < size; ++i) {
@@ -56,14 +56,14 @@ BOOL CFindFlightDlg::OnInitDialog()
 		t7.Format("%d", t.cnt);
 		t = tmp.GetSecond();
 		t8.Format("%d", t.cnt);
-		pListCtrl->InsertItem(i, t0);
-		pListCtrl->SetItemText(i, 1, t1);
-		pListCtrl->SetItemText(i, 2, t2);
-		pListCtrl->SetItemText(i, 3, t3);
-		pListCtrl->SetItemText(i, 4, t4);
-		pListCtrl->SetItemText(i, 5, t5);
-		pListCtrl->SetItemText(i, 6, t7);
-		pListCtrl->SetItemText(i, 7, t8);
+		m_ListCtrl.InsertItem(i, t0);
+		m_ListCtrl.SetItemText(i, 1, t1);
+		m_ListCtrl.SetItemText(i, 2, t2);
+		m_ListCtrl.SetItemText(i, 3, t3);
+		m_ListCtrl.SetItemText(i, 4, t4);
+		m_ListCtrl.SetItemText(i, 5, t5);
+		m_ListCtrl.SetItemText(i, 6, t7);
+		m_ListCtrl.SetItemText(i, 7, t8);
 	}
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE

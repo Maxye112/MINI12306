@@ -29,7 +29,7 @@ FlightManager::FlightManager()
 			f.read((char*)&E1, sizeof(int));
 			f.read((char*)&E2, sizeof(int));
 			f.read((char*)&t, sizeof(int));
-			bool sta = t;
+			int sta = t;
 			FlightInfo New(Num, Date);
 			New.SetFirstInfo(F1, F2);
 			New.SetSecondInfo(E1, E2);
@@ -66,7 +66,7 @@ FlightManager::~FlightManager()
 			int t31 = t3.cnt, t32 = t3.price;
 			f.write((char*)&t31, sizeof(int));
 			f.write((char*)&t32, sizeof(int));
-			int Status = tmp.GetStatus() ? 1 : 0;
+			int Status = tmp.GetStatus();
 			f.write((char*)&Status, sizeof(int));
 		}
 	f.close();
@@ -132,7 +132,7 @@ bool FlightManager::SearchFlightByPlace(char ST[], char DE[], char Date[], Fligh
 	for (int i = 0; i < size; ++i)
 	{
 		FlightInfo tmp = FQ[i];
-		if (tmp.GetStatus() == false)
+		if (tmp.GetStatus() == 0)
 			continue;
 		if (strcmp(tmp.GetOrigin(), ST) == 0 && strcmp(tmp.GetDestination(), DE) == 0 && strcmp(tmp.GetDate(), Date) == 0)
 			List.push_back(tmp);

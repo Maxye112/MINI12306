@@ -37,3 +37,5 @@ extern FlightInfo CurrentFlight;
 extern UsersManager UM;
 extern FlightManager FM;
 extern CityManager CM;
+extern std::map<int, CString> StatusFuc;
+extern std::map<CString, int> AStatusFuc;
