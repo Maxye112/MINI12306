@@ -12,20 +12,15 @@
 IMPLEMENT_DYNAMIC(CFindFlightDlg, CDialogEx)
 
 CFindFlightDlg::CFindFlightDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_QUERY_DIALOG, pParent)
-{
-	nIndex = -1;
-}
+	: CDialogEx(IDD_QUERY_DIALOG, pParent){nIndex = -1;}
 
-CFindFlightDlg::~CFindFlightDlg()
-{
-}
+CFindFlightDlg::~CFindFlightDlg(){}
 
 void CFindFlightDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST1, m_ListCtrl);
-	DDX_Control(pDX, IDC_RADIO1, F);
+	//DDX_Control(pDX, IDC_RADIO1, F);
 }
 
 BOOL CFindFlightDlg::OnInitDialog()
@@ -84,10 +79,7 @@ END_MESSAGE_MAP()
 // CFindFlightDlg 消息处理程序
 
 
-void CFindFlightDlg::OnBnClickedRadio1()
-{
-	nIndex = 1;
-}
+void CFindFlightDlg::OnBnClickedRadio1() { nIndex = 1; }
 
 
 void CFindFlightDlg::OnBnClickedOk()
@@ -101,7 +93,7 @@ void CFindFlightDlg::OnBnClickedOk()
 		AfxMessageBox(_T("请选择一个航班！"));
 	else
 	{
-		FlightInfo tmp = FM.FQ[t];
+		FlightInfo tmp = List[t];
 		CString T, CNT, tot;
 		int Cnt, SinglePrice;
 		INT_PTR nRES;
@@ -171,7 +163,4 @@ void CFindFlightDlg::OnBnClickedOk()
 }
 
 
-void CFindFlightDlg::OnBnClickedRadio2()
-{
-	nIndex = 0;
-}
+void CFindFlightDlg::OnBnClickedRadio2() { nIndex = 0; }

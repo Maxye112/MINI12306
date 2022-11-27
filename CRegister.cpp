@@ -13,22 +13,14 @@
 IMPLEMENT_DYNAMIC(CRegister, CDialogEx)
 
 CRegister::CRegister(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_REGISTER_DIALOG, pParent)
-{
+	: CDialogEx(IDD_REGISTER_DIALOG, pParent){}
 
-}
-
-CRegister::~CRegister()
-{
-}
+CRegister::~CRegister(){}
 BOOL CRegister::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 	ShowWindow(SW_NORMAL);
 	CenterWindow();
-	// 将“关于...”菜单项添加到系统菜单中。
-
-	// IDM_ABOUTBOX 必须在系统命令范围内。
 	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
 	ASSERT(IDM_ABOUTBOX < 0xF000);
 

@@ -6,7 +6,7 @@
 #include "afxdialogex.h"
 #include "ManagerDlg.h"
 #include "AddFlightDlg.h"
-
+#include "EditInfoDlg.h"
 // ManagerDlg 对话框
 int ManagerDlg::col = -1;
 bool ManagerDlg::method = 0;
@@ -32,6 +32,9 @@ void ManagerDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON2, delf);
 	DDX_Control(pDX, IDC_BUTTON3, addc);
 	DDX_Control(pDX, IDC_BUTTON4, delc);
+	DDX_Control(pDX, IDC_EDIT1, UserName);
+	DDX_Control(pDX, IDC_BUTTON5, edit);
+	DDX_Control(pDX, IDC_BUTTON6, logout);
 }
 
 
@@ -42,6 +45,9 @@ BEGIN_MESSAGE_MAP(ManagerDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON1, &ManagerDlg::OnBnClickedButton1)
 	ON_WM_CTLCOLOR()
 	ON_BN_CLICKED(IDC_BUTTON2, &ManagerDlg::OnBnClickedButton2)
+	ON_BN_CLICKED(IDC_BUTTON5, &ManagerDlg::OnBnClickedButton5)
+	ON_BN_CLICKED(IDC_BUTTON6, &ManagerDlg::OnBnClickedButton6)
+	ON_BN_CLICKED(IDC_BUTTON7, &ManagerDlg::OnBnClickedButton7)
 END_MESSAGE_MAP()
 
 
@@ -49,6 +55,7 @@ END_MESSAGE_MAP()
 
 BOOL ManagerDlg::OnInitDialog() 
 {
+	extern User CurrentUser;
 	CDialogEx::OnInitDialog();
 	CString strBmpPath = _T(".\\res\\Main.png");
 	CImage img;
@@ -63,53 +70,34 @@ BOOL ManagerDlg::OnInitDialog()
 		pFont->CreateFont(30, 0, 0, 0, 100,
 			FALSE, FALSE, 0, ANSI_CHARSET, OUT_DEFAULT_PRECIS,
 			CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, FF_SWISS, "Arial");
+		GetDlgItem(IDC_EDIT1)->SetFont(pFont);
 		//GetDlgItem(IDC_EDIT_TEL)->SetFont(pFont);
 		//GetDlgItem(IDC_EDIT_PASSWORD)->SetFont(pFont);
 	}
 	ShowWindow(SW_NORMAL);
 	CenterWindow();
+	CString Welcome = "欢迎管理员：";
+	CString Name =  Welcome + CurrentUser.GetName();
+	SetDlgItemText(IDC_EDIT1, Name);
 	extern CityManager CM;
 	int size = CM.CL.size();
 	for (int i = 0; i < size; ++i) 
 	{
-		City New = CM.CL[i];
-		mCityList.AddString(New.c_str());
+		CityInfo New = CM.CL[i];
+		mCityList.AddString(New.City.c_str());
 	}
 	extern FlightManager FM;
 	mListCtrl.SetExtendedStyle(LVS_EX_FLATSB | LVS_EX_FULLROWSELECT | LVS_EX_HEADERDRAGDROP | LVS_EX_GRIDLINES);
 	mListCtrl.InsertColumn(0, _T("航班号"), LVCFMT_CENTER, 60, 0);
-	mListCtrl.InsertColumn(1, _T("出发地"), LVCFMT_CENTER, 80, 0);
-	mListCtrl.InsertColumn(2, _T("目的地"), LVCFMT_CENTER, 80, 0);
+	mListCtrl.InsertColumn(1, _T("出发地"), LVCFMT_CENTER, 60, 0);
+	mListCtrl.InsertColumn(2, _T("目的地"), LVCFMT_CENTER, 60, 0);
 	mListCtrl.InsertColumn(3, _T("日期"), LVCFMT_CENTER, 80, 0);
 	mListCtrl.InsertColumn(4, _T("起飞时间"), LVCFMT_CENTER, 60, 0);
 	mListCtrl.InsertColumn(5, _T("到达时间"), LVCFMT_CENTER, 60, 0);
-	mListCtrl.InsertColumn(6, _T("一等舱票额"), LVCFMT_CENTER, 80, 0);
-	mListCtrl.InsertColumn(7, _T("二等舱票额"), LVCFMT_CENTER, 80, 0);
-	size = FM.FQ.size();
-	for (int i = 0; i < size; ++i) 
-	{
-		FlightInfo New = FM.FQ[i];
-		CString t0 = New.GetNum();
-		CString t1 = New.GetOrigin();
-		CString t2 = New.GetDestination();
-		CString t3 = New.GetDate();
-		CString t4 = New.GetStartTime();
-		CString t5 = New.GetArriveTime();
-		Seats t = New.GetFirst();
-		CString t6, t7, t8;
-		t7.Format("%d", t.cnt);
-		t = New.GetSecond();
-		t8.Format("%d", t.cnt);
-		mListCtrl.InsertItem(i, t0);
-		mListCtrl.SetItemText(i, 1, t1);
-		mListCtrl.SetItemText(i, 2, t2);
-		mListCtrl.SetItemText(i, 3, t3);
-		mListCtrl.SetItemText(i, 4, t4);
-		mListCtrl.SetItemText(i, 5, t5);
-		mListCtrl.SetItemText(i, 6, t7);
-		mListCtrl.SetItemText(i, 7, t8);
-	}
-	delete pFont;
+	mListCtrl.InsertColumn(6, _T("一等舱票额"), LVCFMT_CENTER, 60, 0);
+	mListCtrl.InsertColumn(7, _T("二等舱票额"), LVCFMT_CENTER, 60, 0);
+	mListCtrl.InsertColumn(8, _T("运营状态"), LVCFMT_CENTER, 60, 0);
+	RefreshWindow();
 	return TRUE;
 }
 
@@ -121,7 +109,7 @@ void ManagerDlg::OnBnClickedButton3()
 	if (CityName == "")
 		AfxMessageBox("请输入城市名称");
 	else {
-		City name = CityName;
+		std::string name = CityName;
 		if (!CM.AddCity(name))
 			AfxMessageBox("城市已存在，请重新输入！");
 		else
@@ -129,8 +117,8 @@ void ManagerDlg::OnBnClickedButton3()
 			mCityList.ResetContent();
 			int size = CM.CL.size();
 			for (int i = 0; i < size; ++i) {
-				City New = CM.CL[i];
-				mCityList.AddString(New.c_str());
+				CityInfo New = CM.CL[i];
+				mCityList.AddString(New.City.c_str());
 			}
 			MessageBox("城市添加成功！");
 		}
@@ -145,15 +133,15 @@ void ManagerDlg::OnBnClickedButton4()
 	if (CityName == "")
 		AfxMessageBox("请输入城市名称！");
 	else {
-		City name = CityName;
+		std::string name = CityName;
 		if (!CM.DelCity(name))
-			AfxMessageBox("城市不存在！");
+			AfxMessageBox("删除失败！请检查是否有与该城市关联的航班或该城市是否存在！");
 		else {
 			mCityList.ResetContent();
 			int size = CM.CL.size();
 			for (int i = 0; i < size; ++i) {
-				City New = CM.CL[i];
-				mCityList.AddString(New.c_str());
+				CityInfo New = CM.CL[i];
+				mCityList.AddString(New.City.c_str());
 			}
 			MessageBox("城市删除成功！");
 		}
@@ -201,37 +189,13 @@ void ManagerDlg::OnColumnclickList1(NMHDR* pNMHDR, LRESULT* pResult)
 void ManagerDlg::OnBnClickedButton1()
 {
 	AddFlightDlg NewWin;
+	NewWin.p = 0;
 	INT_PTR nRes = NewWin.DoModal();
-	extern FlightManager FM;
 	if (nRes == IDOK)
 	{
 		mListCtrl.DeleteAllItems();
-		int size = FM.FQ.size();
-		for (int i = 0; i < size; ++i)
-		{
-			FlightInfo New = FM.FQ[i];
-			CString t0 = New.GetNum();
-			CString t1 = New.GetOrigin();
-			CString t2 = New.GetDestination();
-			CString t3 = New.GetDate();
-			CString t4 = New.GetStartTime();
-			CString t5 = New.GetArriveTime();
-			Seats t = New.GetFirst();
-			CString t6, t7, t8;
-			t7.Format("%d", t.cnt);
-			t = New.GetSecond();
-			t8.Format("%d", t.cnt);
-			mListCtrl.InsertItem(i, t0);
-			mListCtrl.SetItemText(i, 1, t1);
-			mListCtrl.SetItemText(i, 2, t2);
-			mListCtrl.SetItemText(i, 3, t3);
-			mListCtrl.SetItemText(i, 4, t4);
-			mListCtrl.SetItemText(i, 5, t5);
-			mListCtrl.SetItemText(i, 6, t7);
-			mListCtrl.SetItemText(i, 7, t8);
-		}
+		RefreshWindow();
 	}
-
 	// TODO: 在此添加控件通知处理程序代码
 }
 
@@ -254,31 +218,76 @@ void ManagerDlg::OnBnClickedButton2()
 		extern FlightManager FM;
 		FlightInfo tmp = FM.FQ[ID];
 		FM.DelFlight(tmp.GetNum(), tmp.GetDate());
+		std::string o = tmp.GetOrigin(), d = tmp.GetDestination();
+		extern CityManager CM;
+		CM.EditCity(o, 1);
+		CM.EditCity(d, 1);
 		mListCtrl.DeleteAllItems();
-		int size = FM.FQ.size();
-		for (int i = 0; i < size; ++i)
-		{
-			FlightInfo New = FM.FQ[i];
-			CString t0 = New.GetNum();
-			CString t1 = New.GetOrigin();
-			CString t2 = New.GetDestination();
-			CString t3 = New.GetDate();
-			CString t4 = New.GetStartTime();
-			CString t5 = New.GetArriveTime();
-			Seats t = New.GetFirst();
-			CString t6, t7, t8;
-			t7.Format("%d", t.cnt);
-			t = New.GetSecond();
-			t8.Format("%d", t.cnt);
-			mListCtrl.InsertItem(i, t0);
-			mListCtrl.SetItemText(i, 1, t1);
-			mListCtrl.SetItemText(i, 2, t2);
-			mListCtrl.SetItemText(i, 3, t3);
-			mListCtrl.SetItemText(i, 4, t4);
-			mListCtrl.SetItemText(i, 5, t5);
-			mListCtrl.SetItemText(i, 6, t7);
-			mListCtrl.SetItemText(i, 7, t8);
-		}
+		RefreshWindow();
 		MessageBox("航班删除成功！");
 	}
+}
+
+
+void ManagerDlg::RefreshWindow() {
+	extern FlightManager FM;
+	int size = FM.FQ.size();
+	for (int i = 0; i < size; ++i)
+	{
+		FlightInfo New = FM.FQ[i];
+		CString t0 = New.GetNum();
+		CString t1 = New.GetOrigin();
+		CString t2 = New.GetDestination();
+		CString t3 = New.GetDate();
+		CString t4 = New.GetStartTime();
+		CString t5 = New.GetArriveTime();
+		Seats t = New.GetFirst();
+		CString t6, t7, t8;
+		t6 = New.GetStatus() ? "正常" : "停运";
+		t7.Format("%d", t.cnt);
+		t = New.GetSecond();
+		t8.Format("%d", t.cnt);
+		mListCtrl.InsertItem(i, t0);
+		mListCtrl.SetItemText(i, 1, t1);
+		mListCtrl.SetItemText(i, 2, t2);
+		mListCtrl.SetItemText(i, 3, t3);
+		mListCtrl.SetItemText(i, 4, t4);
+		mListCtrl.SetItemText(i, 5, t5);
+		mListCtrl.SetItemText(i, 6, t7);
+		mListCtrl.SetItemText(i, 7, t8);
+		mListCtrl.SetItemText(i, 8, t6);
+	}
+}
+
+void ManagerDlg::OnBnClickedButton5()
+{
+	EditInfoDlg New;
+	extern User CurrentUser;
+	New.DoModal();
+	SetDlgItemText(IDC_EDIT1, CurrentUser.GetName());
+}
+
+
+void ManagerDlg::OnBnClickedButton6()
+{
+	CDialogEx::OnOK();
+}
+
+
+void ManagerDlg::OnBnClickedButton7()
+{
+	extern FlightManager FM;
+	int ID = mListCtrl.GetSelectionMark();
+	if (ID == -1)
+		AfxMessageBox("请选择航班！");
+	else {
+		AddFlightDlg New;
+		extern FlightInfo CurrentFlight;
+		CurrentFlight = FM.FQ[ID];
+		New.p = 1;
+		//New.Add.EnableWindow(0);
+		New.DoModal();
+		mListCtrl.DeleteAllItems();
+		RefreshWindow();
+	}// TODO: 在此添加控件通知处理程序代码
 }

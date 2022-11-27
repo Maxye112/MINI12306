@@ -29,6 +29,6 @@ public:
 	CCustomDrawListCtrl m_ListCtrl;
 	int nIndex;
 	afx_msg void OnBnClickedRadio2();
-	CCustomDrawGroupBox F;
+	//CCustomDrawGroupBox F;
 	vector <FlightInfo> List;
 };

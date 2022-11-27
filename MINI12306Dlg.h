@@ -34,8 +34,6 @@ protected:
 public:
 	afx_msg void OnBnClickedOk();
 	// 用户的类型
-	//CComboBox CType;
-
 	afx_msg void OnBnClickedButtonregi();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedRadio1();

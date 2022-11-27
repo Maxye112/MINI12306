@@ -26,22 +26,27 @@ BOOL CbookedDlg::OnInitDialog()
 	pListCtrl->InsertColumn(5, _T("到达时间"), LVCFMT_CENTER, 60, 0);
 	pListCtrl->InsertColumn(6, _T("坐席类型"), LVCFMT_CENTER, 60, 0);
 	pListCtrl->InsertColumn(7, _T("票价"), LVCFMT_CENTER, 60, 0);
+	pListCtrl->InsertColumn(8, _T("运营状态"), LVCFMT_CENTER, 60, 0);
 	extern User CurrentUser;
+	extern FlightManager FM;
 	size_t size = CurrentUser.BookedList.size();
 	for (size_t i = 0; i < size; ++i) {
 		FlightInfo tmp = CurrentUser.BookedList[i];
+		FlightInfo t = FM.FindFlight(tmp);
 		CString t0 = tmp.GetNum();
 		CString t1 = tmp.GetOrigin();
 		CString t2 = tmp.GetDestination();
 		CString t3 = tmp.GetDate();
 		CString t4 = tmp.GetStartTime();
 		CString t5 = tmp.GetArriveTime();
+		CString t8 = t.GetStatus() ? "正常" : "停运";
 		pListCtrl->InsertItem(i, t0);
 		pListCtrl->SetItemText(i, 1, t1);
 		pListCtrl->SetItemText(i, 2, t2);
 		pListCtrl->SetItemText(i, 3, t3);
 		pListCtrl->SetItemText(i, 4, t4);
 		pListCtrl->SetItemText(i, 5, t5);
+		pListCtrl->SetItemText(i, 8, t8);
 		int cnt1 = tmp.GetFirst().cnt;
 		int cnt2 = tmp.GetSecond().cnt;
 		int price;

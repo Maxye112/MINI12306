@@ -52,7 +52,7 @@ BOOL CPassenger::OnInitDialog()
 	int size = CM.CL.size();
 	for (int i = 0; i < size; ++i) 
 	{
-		CString Name= CM.CL[i].c_str();
+		CString Name= CM.CL[i].City.c_str();
 		mOri.AddString(Name);
 		mDest.AddString(Name);
 	}
@@ -81,14 +81,9 @@ BOOL CPassenger::OnInitDialog()
 
 CPassenger::CPassenger(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_PASS_DIALOG, pParent)
-	, m_UserName(_T(""))
-{
+	, m_UserName(_T("")){}
 
-}
-
-CPassenger::~CPassenger()
-{
-}
+CPassenger::~CPassenger(){}
 
 void CPassenger::DoDataExchange(CDataExchange* pDX)
 {
@@ -150,8 +145,9 @@ void CPassenger::OnBnClickedButton1()
 		char* ori = Ori.GetBuffer(Ori.GetLength());
 		char* dest = Dest.GetBuffer(Dest.GetLength());
 		char* date = Date.GetBuffer(Date.GetLength());
-		FM.SearchFlightByPlace(ori, dest, date, query.List);
-		query.DoModal();
+		if (FM.SearchFlightByPlace(ori, dest, date, query.List))
+			query.DoModal();
+		else MessageBox("当日下无符合需求的航班！");
 	}
 }
 
@@ -173,17 +169,9 @@ void CPassenger::OnBnClickedButton4()
 	CbookedDlg New;
 	New.DoModal();
 }
-
-
 void CPassenger::OnBnClickedButton3()
 {
 	EditInfoDlg New;
-	extern User CurrentUser;
-	New.mName = CurrentUser.GetName();
-	New.mID = CurrentUser.GetID();
-	std::string c = CurrentUser.GetTel();
-	c[3] = c[4] = c[5] = c[6] = '*';
-	New.mCurrentTel = c.c_str();
 	New.DoModal();
 	m_UserName = CurrentUser.GetName();
 	SetDlgItemText(IDC_EDIT1,m_UserName);
@@ -220,8 +208,5 @@ HBRUSH CPassenger::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	HBRUSH hbr = CDialogEx::OnCtlColor(pDC, pWnd, nCtlColor);
 	if (pWnd == this)
 		return m_bkBrush;
-	// TODO:  在此更改 DC 的任何特性
-
-	// TODO:  如果默认的不是所需画笔，则返回另一个画笔
 	return hbr;
 }

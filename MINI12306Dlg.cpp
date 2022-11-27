@@ -11,37 +11,27 @@
 #include "CResetDialog1.h"
 #include "afxdialogex.h"
 #include "ManagerDlg.h"
-
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 int Typ = -1;
-
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
-
 class CAboutDlg : public CDialogEx
 {
 public:
 	CAboutDlg();
-
 // 对话框数据
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
 #endif
-
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
-
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
 };
 
-CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
-{
-}
+CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX){}
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -50,12 +40,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
-
-
 // CMINI12306Dlg 对话框
-
-
-
 CMINI12306Dlg::CMINI12306Dlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_MINI12306_DIALOG, pParent)
 {
@@ -120,7 +105,6 @@ BOOL CMINI12306Dlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 	MoveWindow(0, 0, 640, 480);
 	CenterWindow();
-
 	CString strBmpPath = _T(".\\res\\LoginUI.png");
 	CImage img;
 	img.Load(strBmpPath);
@@ -159,9 +143,7 @@ void CMINI12306Dlg::OnSysCommand(UINT nID, LPARAM lParam)
 		dlgAbout.DoModal();
 	}
 	else
-	{
 		CDialogEx::OnSysCommand(nID, lParam);
-	}
 }
 
 // 如果向对话框添加最小化按钮，则需要下面的代码
@@ -188,9 +170,7 @@ void CMINI12306Dlg::OnPaint()
 		dc.DrawIcon(x, y, m_hIcon);
 	}
 	else
-	{
 		CDialogEx::OnPaint();
-	}
 }
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
@@ -199,8 +179,6 @@ HCURSOR CMINI12306Dlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
 }
-
-
 
 void CMINI12306Dlg::OnBnClickedOk()
 {
@@ -244,13 +222,18 @@ void CMINI12306Dlg::OnBnClickedOk()
 					//管理端
 					ManagerDlg NewWin;
 					MessageBox(_T("登录成功！"));
+					extern User CurrentUser;
+					UM.FindUserByTel(Tel, CurrentUser);
 					GetDlgItem(IDC_EDIT_TEL)->SetWindowTextA("");
 					GetDlgItem(IDC_EDIT_PASSWORD)->SetWindowTextA("");
 					ShowWindow(SW_HIDE);
 					INT_PTR New = NewWin.DoModal();
-					ShowWindow(SW_NORMAL);
-					CenterWindow();
-					//CDialogEx::OnOK();
+					if (IDOK == New)
+					{
+						ShowWindow(SW_NORMAL);
+						CenterWindow();
+					}
+					else CDialogEx::OnOK();
 				}
 		}
 	}
@@ -271,19 +254,8 @@ void CMINI12306Dlg::OnBnClickedButton2()
 	New.DoModal();
 }
 
-
-void CMINI12306Dlg::OnBnClickedRadio1()
-{
-	Typ = 0;
-}
-
-
-void CMINI12306Dlg::OnBnClickedRadio2()
-{
-	Typ = 1;
-}
-
-
+void CMINI12306Dlg::OnBnClickedRadio1(){Typ = 0;}
+void CMINI12306Dlg::OnBnClickedRadio2(){Typ = 1;}
 
 LRESULT CMINI12306Dlg::OnNcHitTest(CPoint point)
 {

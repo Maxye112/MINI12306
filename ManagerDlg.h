@@ -37,5 +37,10 @@ public:
 	CBrush m_bkBrush;
 	afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 	afx_msg void OnBnClickedButton2();
-	CCustomDrawBtn addf, delf, addc, delc;
+	CCustomDrawBtn addf, delf, addc, delc, logout, edit;
+	CCustomDrawEdit UserName;
+	void RefreshWindow();
+	afx_msg void OnBnClickedButton5();
+	afx_msg void OnBnClickedButton6();
+	afx_msg void OnBnClickedButton7();
 };

@@ -15,14 +15,9 @@ EditInfoDlg::EditInfoDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_EDITINFO_DIALOG, pParent)
 	, mName(_T(""))
 	, mID(_T(""))
-	, mCurrentTel(_T(""))
-{
+	, mCurrentTel(_T("")){}
 
-}
-
-EditInfoDlg::~EditInfoDlg()
-{
-}
+EditInfoDlg::~EditInfoDlg(){}
 
 void EditInfoDlg::DoDataExchange(CDataExchange* pDX)
 {
@@ -45,6 +40,15 @@ END_MESSAGE_MAP()
 BOOL EditInfoDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
+	extern User CurrentUser;
+	mName = CurrentUser.GetName();
+	mID = CurrentUser.GetID();
+	std::string c = CurrentUser.GetTel();
+	c[3] = c[4] = c[5] = c[6] = '*';
+	mCurrentTel = c.c_str();
+	SetDlgItemText(IDC_EDIT1, mName);
+	SetDlgItemText(IDC_EDIT2, mID);
+	SetDlgItemText(IDC_EDIT5, mCurrentTel);
 	ShowWindow(SW_NORMAL);
 	CenterWindow();
 	UpdateData(TRUE);

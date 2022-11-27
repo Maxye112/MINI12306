@@ -14,31 +14,21 @@ IMPLEMENT_DYNAMIC(CResetDialog1, CDialogEx)
 CResetDialog1::CResetDialog1(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_RESET_DIALOG, pParent)
 	, mTel(_T(""))
-{
-	Typ = -1;
-}
+{Typ = -1;}
 
-CResetDialog1::~CResetDialog1()
-{
-}
+CResetDialog1::~CResetDialog1(){}
 
 void CResetDialog1::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT1, mTel);
 }
-
-
 BEGIN_MESSAGE_MAP(CResetDialog1, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CResetDialog1::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_RADIO1, &CResetDialog1::OnBnClickedRadio1)
 	ON_BN_CLICKED(IDC_RADIO2, &CResetDialog1::OnBnClickedRadio2)
 END_MESSAGE_MAP()
-
-
 // CResetDialog1 消息处理程序
-
-
 void CResetDialog1::OnBnClickedOk()
 {
 	extern UsersManager UM;
@@ -88,13 +78,5 @@ void CResetDialog1::OnBnClickedOk()
 }
 
 
-void CResetDialog1::OnBnClickedRadio1()
-{
-	Typ = 0;
-}
-
-
-void CResetDialog1::OnBnClickedRadio2()
-{
-	Typ = 1;
-}
+void CResetDialog1::OnBnClickedRadio1(){Typ = 0;}
+void CResetDialog1::OnBnClickedRadio2(){Typ = 1;}
